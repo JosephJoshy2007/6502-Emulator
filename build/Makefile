@@ -213,6 +213,19 @@ depend:
 .PHONY : 6502_store_tests/fast
 
 #=============================================================================
+# Target rules for targets named 6502_jump_tests
+
+# Build rule for target.
+6502_jump_tests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 6502_jump_tests
+.PHONY : 6502_jump_tests
+
+# fast build rule for target.
+6502_jump_tests/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_jump_tests.dir\build.make CMakeFiles/6502_jump_tests.dir/build
+.PHONY : 6502_jump_tests/fast
+
+#=============================================================================
 # Target rules for targets named gmock
 
 # Build rule for target.
@@ -312,6 +325,30 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_app.dir\build.make CMakeFiles/6502_app.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+testing/test_jump.obj: testing/test_jump.cpp.obj
+.PHONY : testing/test_jump.obj
+
+# target to build an object file
+testing/test_jump.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_jump_tests.dir\build.make CMakeFiles/6502_jump_tests.dir/testing/test_jump.cpp.obj
+.PHONY : testing/test_jump.cpp.obj
+
+testing/test_jump.i: testing/test_jump.cpp.i
+.PHONY : testing/test_jump.i
+
+# target to preprocess a source file
+testing/test_jump.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_jump_tests.dir\build.make CMakeFiles/6502_jump_tests.dir/testing/test_jump.cpp.i
+.PHONY : testing/test_jump.cpp.i
+
+testing/test_jump.s: testing/test_jump.cpp.s
+.PHONY : testing/test_jump.s
+
+# target to generate assembly for a file
+testing/test_jump.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_jump_tests.dir\build.make CMakeFiles/6502_jump_tests.dir/testing/test_jump.cpp.s
+.PHONY : testing/test_jump.cpp.s
+
 testing/test_load.obj: testing/test_load.cpp.obj
 .PHONY : testing/test_load.obj
 
@@ -373,6 +410,7 @@ help:
 	@echo ... list_install_components
 	@echo ... rebuild_cache
 	@echo ... 6502_app
+	@echo ... 6502_jump_tests
 	@echo ... 6502_lib
 	@echo ... 6502_load_tests
 	@echo ... 6502_store_tests
@@ -386,6 +424,9 @@ help:
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
+	@echo ... testing/test_jump.obj
+	@echo ... testing/test_jump.i
+	@echo ... testing/test_jump.s
 	@echo ... testing/test_load.obj
 	@echo ... testing/test_load.i
 	@echo ... testing/test_load.s

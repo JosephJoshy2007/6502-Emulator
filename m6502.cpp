@@ -399,6 +399,21 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
                 break;
             }
 
+            case INS_JMP_IND: {
+                Byte low = FetchByte(memory, cycles);
+                Byte high = FetchByte(memory, cycles);
+                Word pointerAddress = (high << 8) | low;
+
+                // Handle the 6502 bug where the high byte wraps around on page boundary
+                Byte effectiveAddrLow = ReadByte(memory, cycles, pointerAddress);
+                Byte effectiveAddrHigh = ReadByte(memory, cycles, (pointerAddress & 0xFF00) | ((pointerAddress + 1) & 0x00FF));
+                Word effectiveAddress = (effectiveAddrHigh << 8) | effectiveAddrLow;
+
+                PC = effectiveAddress;
+
+                break;
+            }
+
             case INS_JSR: {
                 Byte low = FetchByte(memory, cycles);
                 Byte high = FetchByte(memory, cycles);
@@ -413,6 +428,20 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
 
                 PC = address;
                 cycles--; // JSR takes an additional cycle for the jump
+
+                break;
+            }
+
+            case INS_RTS: {
+                // Pull return address from stack
+                SP++;
+                Byte low = ReadByte(memory, cycles, SP | 0x0100); // Pull low byte
+                SP++;
+                Byte high = ReadByte(memory, cycles, SP | 0x0100); // Pull high byte
+                Word returnAddress = (high << 8) | low;
+
+                PC = returnAddress + 1; // Set PC to the instruction after JSR
+                cycles -= 3;
 
                 break;
             }

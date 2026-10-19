@@ -30,6 +30,7 @@ struct CPU{
     Byte I : 1;
     Byte D : 1;
     Byte B : 1;
+    Byte U : 1;
     Byte V : 1;
     Byte N : 1;
 
@@ -113,6 +114,7 @@ struct CPU{
         //Jump
         INS_JSR = 0x20,
         INS_JMP_ABS = 0x4C,
+        INS_JMP_IND = 0x6C,
         INS_RTS = 0x60;
 
     s32 Execute(Memory& memory, s32 cycles);

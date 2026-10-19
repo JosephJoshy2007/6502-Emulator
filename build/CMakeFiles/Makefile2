@@ -66,6 +66,7 @@ all: CMakeFiles/6502_lib.dir/all
 all: CMakeFiles/6502_app.dir/all
 all: CMakeFiles/6502_load_tests.dir/all
 all: CMakeFiles/6502_store_tests.dir/all
+all: CMakeFiles/6502_jump_tests.dir/all
 all: _deps/googletest-build/all
 .PHONY : all
 
@@ -74,6 +75,7 @@ codegen: CMakeFiles/6502_lib.dir/codegen
 codegen: CMakeFiles/6502_app.dir/codegen
 codegen: CMakeFiles/6502_load_tests.dir/codegen
 codegen: CMakeFiles/6502_store_tests.dir/codegen
+codegen: CMakeFiles/6502_jump_tests.dir/codegen
 codegen: _deps/googletest-build/codegen
 .PHONY : codegen
 
@@ -86,6 +88,7 @@ clean: CMakeFiles/6502_lib.dir/clean
 clean: CMakeFiles/6502_app.dir/clean
 clean: CMakeFiles/6502_load_tests.dir/clean
 clean: CMakeFiles/6502_store_tests.dir/clean
+clean: CMakeFiles/6502_jump_tests.dir/clean
 clean: _deps/googletest-build/clean
 .PHONY : clean
 
@@ -162,7 +165,7 @@ _deps/googletest-build/googletest/clean: _deps/googletest-build/googletest/CMake
 CMakeFiles/6502_lib.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_lib.dir\build.make CMakeFiles/6502_lib.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_lib.dir\build.make CMakeFiles/6502_lib.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" --progress-num=3,4 "Built target 6502_lib"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" --progress-num=5,6 "Built target 6502_lib"
 .PHONY : CMakeFiles/6502_lib.dir/all
 
 # Build rule for subdir invocation for target.
@@ -179,7 +182,7 @@ CMakeFiles/6502_lib.dir/rule: cmake_check_build_system
 # codegen rule for target.
 CMakeFiles/6502_lib.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_lib.dir\build.make CMakeFiles/6502_lib.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" --progress-num=3,4 "Finished codegen for target 6502_lib"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" --progress-num=5,6 "Finished codegen for target 6502_lib"
 .PHONY : CMakeFiles/6502_lib.dir/codegen
 
 # clean rule for target.
@@ -228,7 +231,7 @@ CMakeFiles/6502_load_tests.dir/all: _deps/googletest-build/googletest/CMakeFiles
 CMakeFiles/6502_load_tests.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_load_tests.dir\build.make CMakeFiles/6502_load_tests.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_load_tests.dir\build.make CMakeFiles/6502_load_tests.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" --progress-num=5,6 "Built target 6502_load_tests"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" --progress-num=7,8 "Built target 6502_load_tests"
 .PHONY : CMakeFiles/6502_load_tests.dir/all
 
 # Build rule for subdir invocation for target.
@@ -245,7 +248,7 @@ CMakeFiles/6502_load_tests.dir/rule: cmake_check_build_system
 # codegen rule for target.
 CMakeFiles/6502_load_tests.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_load_tests.dir\build.make CMakeFiles/6502_load_tests.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" --progress-num=5,6 "Finished codegen for target 6502_load_tests"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" --progress-num=7,8 "Finished codegen for target 6502_load_tests"
 .PHONY : CMakeFiles/6502_load_tests.dir/codegen
 
 # clean rule for target.
@@ -262,7 +265,7 @@ CMakeFiles/6502_store_tests.dir/all: _deps/googletest-build/googletest/CMakeFile
 CMakeFiles/6502_store_tests.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_store_tests.dir\build.make CMakeFiles/6502_store_tests.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_store_tests.dir\build.make CMakeFiles/6502_store_tests.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" --progress-num=7,8 "Built target 6502_store_tests"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" --progress-num=9,10 "Built target 6502_store_tests"
 .PHONY : CMakeFiles/6502_store_tests.dir/all
 
 # Build rule for subdir invocation for target.
@@ -279,7 +282,7 @@ CMakeFiles/6502_store_tests.dir/rule: cmake_check_build_system
 # codegen rule for target.
 CMakeFiles/6502_store_tests.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_store_tests.dir\build.make CMakeFiles/6502_store_tests.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" --progress-num=7,8 "Finished codegen for target 6502_store_tests"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" --progress-num=9,10 "Finished codegen for target 6502_store_tests"
 .PHONY : CMakeFiles/6502_store_tests.dir/codegen
 
 # clean rule for target.
@@ -288,13 +291,47 @@ CMakeFiles/6502_store_tests.dir/clean:
 .PHONY : CMakeFiles/6502_store_tests.dir/clean
 
 #=============================================================================
+# Target rules for target CMakeFiles/6502_jump_tests.dir
+
+# All Build rule for target.
+CMakeFiles/6502_jump_tests.dir/all: CMakeFiles/6502_lib.dir/all
+CMakeFiles/6502_jump_tests.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
+CMakeFiles/6502_jump_tests.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_jump_tests.dir\build.make CMakeFiles/6502_jump_tests.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_jump_tests.dir\build.make CMakeFiles/6502_jump_tests.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" --progress-num=3,4 "Built target 6502_jump_tests"
+.PHONY : CMakeFiles/6502_jump_tests.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/6502_jump_tests.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start "C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" 8
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/6502_jump_tests.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start "C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" 0
+.PHONY : CMakeFiles/6502_jump_tests.dir/rule
+
+# Convenience name for target.
+6502_jump_tests: CMakeFiles/6502_jump_tests.dir/rule
+.PHONY : 6502_jump_tests
+
+# codegen rule for target.
+CMakeFiles/6502_jump_tests.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_jump_tests.dir\build.make CMakeFiles/6502_jump_tests.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" --progress-num=3,4 "Finished codegen for target 6502_jump_tests"
+.PHONY : CMakeFiles/6502_jump_tests.dir/codegen
+
+# clean rule for target.
+CMakeFiles/6502_jump_tests.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_jump_tests.dir\build.make CMakeFiles/6502_jump_tests.dir/clean
+.PHONY : CMakeFiles/6502_jump_tests.dir/clean
+
+#=============================================================================
 # Target rules for target _deps/googletest-build/googlemock/CMakeFiles/gmock.dir
 
 # All Build rule for target.
 _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) $(MAKESILENT) -f _deps\googletest-build\googlemock\CMakeFiles\gmock.dir\build.make _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/depend
 	$(MAKE) $(MAKESILENT) -f _deps\googletest-build\googlemock\CMakeFiles\gmock.dir\build.make _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" --progress-num=9,10 "Built target gmock"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" --progress-num=11,12 "Built target gmock"
 .PHONY : _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/all
 
 # Build rule for subdir invocation for target.
@@ -311,7 +348,7 @@ gmock: _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/rule
 # codegen rule for target.
 _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f _deps\googletest-build\googlemock\CMakeFiles\gmock.dir\build.make _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" --progress-num=9,10 "Finished codegen for target gmock"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" --progress-num=11,12 "Finished codegen for target gmock"
 .PHONY : _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/codegen
 
 # clean rule for target.
@@ -327,7 +364,7 @@ _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/all: _deps/googletes
 _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) $(MAKESILENT) -f _deps\googletest-build\googlemock\CMakeFiles\gmock_main.dir\build.make _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/depend
 	$(MAKE) $(MAKESILENT) -f _deps\googletest-build\googlemock\CMakeFiles\gmock_main.dir\build.make _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" --progress-num=11,12 "Built target gmock_main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" --progress-num=13,14 "Built target gmock_main"
 .PHONY : _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/all
 
 # Build rule for subdir invocation for target.
@@ -344,7 +381,7 @@ gmock_main: _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/rule
 # codegen rule for target.
 _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f _deps\googletest-build\googlemock\CMakeFiles\gmock_main.dir\build.make _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" --progress-num=11,12 "Finished codegen for target gmock_main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" --progress-num=13,14 "Finished codegen for target gmock_main"
 .PHONY : _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/codegen
 
 # clean rule for target.
@@ -359,7 +396,7 @@ _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/clean:
 _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all:
 	$(MAKE) $(MAKESILENT) -f _deps\googletest-build\googletest\CMakeFiles\gtest.dir\build.make _deps/googletest-build/googletest/CMakeFiles/gtest.dir/depend
 	$(MAKE) $(MAKESILENT) -f _deps\googletest-build\googletest\CMakeFiles\gtest.dir\build.make _deps/googletest-build/googletest/CMakeFiles/gtest.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" --progress-num=13,14 "Built target gtest"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" --progress-num=15,16 "Built target gtest"
 .PHONY : _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
 
 # Build rule for subdir invocation for target.
@@ -376,7 +413,7 @@ gtest: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/rule
 # codegen rule for target.
 _deps/googletest-build/googletest/CMakeFiles/gtest.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f _deps\googletest-build\googletest\CMakeFiles\gtest.dir\build.make _deps/googletest-build/googletest/CMakeFiles/gtest.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" --progress-num=13,14 "Finished codegen for target gtest"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" --progress-num=15,16 "Finished codegen for target gtest"
 .PHONY : _deps/googletest-build/googletest/CMakeFiles/gtest.dir/codegen
 
 # clean rule for target.
@@ -391,7 +428,7 @@ _deps/googletest-build/googletest/CMakeFiles/gtest.dir/clean:
 _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) $(MAKESILENT) -f _deps\googletest-build\googletest\CMakeFiles\gtest_main.dir\build.make _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/depend
 	$(MAKE) $(MAKESILENT) -f _deps\googletest-build\googletest\CMakeFiles\gtest_main.dir\build.make _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" --progress-num=15,16 "Built target gtest_main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" --progress-num=17,18 "Built target gtest_main"
 .PHONY : _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
 
 # Build rule for subdir invocation for target.
@@ -408,7 +445,7 @@ gtest_main: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/rule
 # codegen rule for target.
 _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f _deps\googletest-build\googletest\CMakeFiles\gtest_main.dir\build.make _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" --progress-num=15,16 "Finished codegen for target gtest_main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" --progress-num=17,18 "Finished codegen for target gtest_main"
 .PHONY : _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/codegen
 
 # clean rule for target.
