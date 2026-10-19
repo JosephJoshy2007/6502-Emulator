@@ -1,21 +1,27 @@
 [
 {
   "directory": "C:/Users/Admin/Desktop/Joseph/6502 Emulator/build",
-  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe   -g -std=gnu++17 -o CMakeFiles\\6502_lib.dir\\m6502.cpp.obj -c \"C:\\Users\\Admin\\Desktop\\Joseph\\6502 Emulator\\m6502.cpp\"",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles\\6502_lib.dir\\includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\6502_lib.dir\\m6502.cpp.obj -c \"C:\\Users\\Admin\\Desktop\\Joseph\\6502 Emulator\\m6502.cpp\"",
   "file": "C:/Users/Admin/Desktop/Joseph/6502 Emulator/m6502.cpp",
   "output": "CMakeFiles/6502_lib.dir/m6502.cpp.obj"
 },
 {
   "directory": "C:/Users/Admin/Desktop/Joseph/6502 Emulator/build",
-  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe   -g -std=gnu++17 -o CMakeFiles\\6502_app.dir\\main.cpp.obj -c \"C:\\Users\\Admin\\Desktop\\Joseph\\6502 Emulator\\main.cpp\"",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles\\6502_app.dir\\includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\6502_app.dir\\main.cpp.obj -c \"C:\\Users\\Admin\\Desktop\\Joseph\\6502 Emulator\\main.cpp\"",
   "file": "C:/Users/Admin/Desktop/Joseph/6502 Emulator/main.cpp",
   "output": "CMakeFiles/6502_app.dir/main.cpp.obj"
 },
 {
   "directory": "C:/Users/Admin/Desktop/Joseph/6502 Emulator/build",
-  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles\\6502_tests.dir\\includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\6502_tests.dir\\test.cpp.obj -c \"C:\\Users\\Admin\\Desktop\\Joseph\\6502 Emulator\\test.cpp\"",
-  "file": "C:/Users/Admin/Desktop/Joseph/6502 Emulator/test.cpp",
-  "output": "CMakeFiles/6502_tests.dir/test.cpp.obj"
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles\\6502_load_tests.dir\\includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\6502_load_tests.dir\\testing\\test_load.cpp.obj -c \"C:\\Users\\Admin\\Desktop\\Joseph\\6502 Emulator\\testing\\test_load.cpp\"",
+  "file": "C:/Users/Admin/Desktop/Joseph/6502 Emulator/testing/test_load.cpp",
+  "output": "CMakeFiles/6502_load_tests.dir/testing/test_load.cpp.obj"
+},
+{
+  "directory": "C:/Users/Admin/Desktop/Joseph/6502 Emulator/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles\\6502_store_tests.dir\\includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\6502_store_tests.dir\\testing\\test_store.cpp.obj -c \"C:\\Users\\Admin\\Desktop\\Joseph\\6502 Emulator\\testing\\test_store.cpp\"",
+  "file": "C:/Users/Admin/Desktop/Joseph/6502 Emulator/testing/test_store.cpp",
+  "output": "CMakeFiles/6502_store_tests.dir/testing/test_store.cpp.obj"
 },
 {
   "directory": "C:/Users/Admin/Desktop/Joseph/6502 Emulator/build/_deps/googletest-build/googlemock",

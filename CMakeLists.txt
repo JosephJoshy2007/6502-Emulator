@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # 1. Build the emulator as a static library
 add_library(6502_lib m6502.cpp)
+target_include_directories(6502_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 # 2. Build the main executable (for the actual app later)
 add_executable(6502_app main.cpp)
@@ -20,7 +21,8 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(googletest)
 
-# 4. Build the test executable
-add_executable(6502_tests test.cpp)
-# Linking GTest::gtest_main automatically provides the main() function for the tests
-target_link_libraries(6502_tests PRIVATE 6502_lib GTest::gtest_main)
+add_executable(6502_load_tests testing/test_load.cpp)
+target_link_libraries(6502_load_tests PRIVATE 6502_lib GTest::gtest_main)
+
+add_executable(6502_store_tests testing/test_store.cpp)
+target_link_libraries(6502_store_tests PRIVATE 6502_lib GTest::gtest_main)

@@ -72,6 +72,7 @@ CMakeFiles/6502_app.dir/codegen:
 .PHONY : CMakeFiles/6502_app.dir/codegen
 
 CMakeFiles/6502_app.dir/main.cpp.obj: CMakeFiles/6502_app.dir/flags.make
+CMakeFiles/6502_app.dir/main.cpp.obj: CMakeFiles/6502_app.dir/includes_CXX.rsp
 CMakeFiles/6502_app.dir/main.cpp.obj: C:/Users/Admin/Desktop/Joseph/6502\ Emulator/main.cpp
 CMakeFiles/6502_app.dir/main.cpp.obj: CMakeFiles/6502_app.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/6502_app.dir/main.cpp.obj"

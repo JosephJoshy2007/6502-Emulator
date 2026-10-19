@@ -43,7 +43,7 @@ struct CPU{
 
     void WriteWord(Memory& memory, s32& cycles, Word address, Word value);
 
-    void LOAD_REGISTER_SET_STATUS(Byte& Register);
+    void ZERO_AND_NEGATIVE_SET_STATUS(Byte& Register);
 
     void LOAD_REGISTER_ZERO_PAGE_WITH_X_OFFSET(Memory& memory, s32& cycles, Byte& Register);
 
@@ -54,6 +54,14 @@ struct CPU{
     void LOAD_REGISTER_ABSOLUTE_WITH_X_OFFSET(Memory& memory, s32& cycles, Byte& Register);
 
     void LOAD_REGISTER_ABSOLUTE_WITH_Y_OFFSET(Memory& memory, s32& cycles, Byte& Register);
+
+    void STORE_REGISTER_ZERO_PAGE(Memory& memory, s32& cycles, Byte& Register);
+
+    void STORE_REGISTER_ZERO_PAGE_WITH_X_OFFSET(Memory& memory, s32& cycles, Byte& Register);
+
+    void STORE_REGISTER_ZERO_PAGE_WITH_Y_OFFSET(Memory& memory, s32& cycles, Byte& Register);
+
+    void STORE_REGISTER_ABSOLUTE(Memory& memory, s32& cycles, Byte& Register);
 
     static constexpr Byte 
 
@@ -81,11 +89,31 @@ struct CPU{
         INS_LDY_ABS = 0xAC,
         INS_LDY_ABS_X = 0xBC,
 
+        //STA
+        INS_STA_ZP = 0x85,
+        INS_STA_ZP_X = 0x95,
+        INS_STA_ABS = 0x8D,
+        INS_STA_ABS_X = 0x9D,
+        INS_STA_ABS_Y = 0x99,
+        INS_STA_IND_X = 0x81,
+        INS_STA_IND_Y = 0x91,
+
+        //STX
+        INS_STX_ZP = 0x86,
+        INS_STX_ZP_Y = 0x96,
+        INS_STX_ABS = 0x8E,
+
+        //STY
+        INS_STY_ZP = 0x84,
+        INS_STY_ZP_X = 0x94,
+        INS_STY_ABS = 0x8C,
+
         INS_NOP = 0xEA,
 
         //Jump
         INS_JSR = 0x20,
-        INS_JMP_ABS = 0x4C;
+        INS_JMP_ABS = 0x4C,
+        INS_RTS = 0x60;
 
     s32 Execute(Memory& memory, s32 cycles);
     

@@ -11,7 +11,8 @@
 	{
 		"commands" : 
 		[
-			"add_library"
+			"add_library",
+			"target_include_directories"
 		],
 		"files" : 
 		[
@@ -26,6 +27,12 @@
 				"command" : 0,
 				"file" : 0,
 				"line" : 8,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 9,
 				"parent" : 0
 			}
 		]
@@ -42,6 +49,13 @@
 			[
 				{
 					"fragment" : "-g -std=gnu++17"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 2,
+					"path" : "C:/Users/Admin/Desktop/Joseph/6502 Emulator"
 				}
 			],
 			"language" : "CXX",

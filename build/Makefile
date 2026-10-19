@@ -187,17 +187,30 @@ depend:
 .PHONY : 6502_app/fast
 
 #=============================================================================
-# Target rules for targets named 6502_tests
+# Target rules for targets named 6502_load_tests
 
 # Build rule for target.
-6502_tests: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 6502_tests
-.PHONY : 6502_tests
+6502_load_tests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 6502_load_tests
+.PHONY : 6502_load_tests
 
 # fast build rule for target.
-6502_tests/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_tests.dir\build.make CMakeFiles/6502_tests.dir/build
-.PHONY : 6502_tests/fast
+6502_load_tests/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_load_tests.dir\build.make CMakeFiles/6502_load_tests.dir/build
+.PHONY : 6502_load_tests/fast
+
+#=============================================================================
+# Target rules for targets named 6502_store_tests
+
+# Build rule for target.
+6502_store_tests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 6502_store_tests
+.PHONY : 6502_store_tests
+
+# fast build rule for target.
+6502_store_tests/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_store_tests.dir\build.make CMakeFiles/6502_store_tests.dir/build
+.PHONY : 6502_store_tests/fast
 
 #=============================================================================
 # Target rules for targets named gmock
@@ -299,29 +312,53 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_app.dir\build.make CMakeFiles/6502_app.dir/main.cpp.s
 .PHONY : main.cpp.s
 
-test.obj: test.cpp.obj
-.PHONY : test.obj
+testing/test_load.obj: testing/test_load.cpp.obj
+.PHONY : testing/test_load.obj
 
 # target to build an object file
-test.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_tests.dir\build.make CMakeFiles/6502_tests.dir/test.cpp.obj
-.PHONY : test.cpp.obj
+testing/test_load.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_load_tests.dir\build.make CMakeFiles/6502_load_tests.dir/testing/test_load.cpp.obj
+.PHONY : testing/test_load.cpp.obj
 
-test.i: test.cpp.i
-.PHONY : test.i
+testing/test_load.i: testing/test_load.cpp.i
+.PHONY : testing/test_load.i
 
 # target to preprocess a source file
-test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_tests.dir\build.make CMakeFiles/6502_tests.dir/test.cpp.i
-.PHONY : test.cpp.i
+testing/test_load.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_load_tests.dir\build.make CMakeFiles/6502_load_tests.dir/testing/test_load.cpp.i
+.PHONY : testing/test_load.cpp.i
 
-test.s: test.cpp.s
-.PHONY : test.s
+testing/test_load.s: testing/test_load.cpp.s
+.PHONY : testing/test_load.s
 
 # target to generate assembly for a file
-test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_tests.dir\build.make CMakeFiles/6502_tests.dir/test.cpp.s
-.PHONY : test.cpp.s
+testing/test_load.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_load_tests.dir\build.make CMakeFiles/6502_load_tests.dir/testing/test_load.cpp.s
+.PHONY : testing/test_load.cpp.s
+
+testing/test_store.obj: testing/test_store.cpp.obj
+.PHONY : testing/test_store.obj
+
+# target to build an object file
+testing/test_store.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_store_tests.dir\build.make CMakeFiles/6502_store_tests.dir/testing/test_store.cpp.obj
+.PHONY : testing/test_store.cpp.obj
+
+testing/test_store.i: testing/test_store.cpp.i
+.PHONY : testing/test_store.i
+
+# target to preprocess a source file
+testing/test_store.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_store_tests.dir\build.make CMakeFiles/6502_store_tests.dir/testing/test_store.cpp.i
+.PHONY : testing/test_store.cpp.i
+
+testing/test_store.s: testing/test_store.cpp.s
+.PHONY : testing/test_store.s
+
+# target to generate assembly for a file
+testing/test_store.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_store_tests.dir\build.make CMakeFiles/6502_store_tests.dir/testing/test_store.cpp.s
+.PHONY : testing/test_store.cpp.s
 
 # Help Target
 help:
@@ -337,7 +374,8 @@ help:
 	@echo ... rebuild_cache
 	@echo ... 6502_app
 	@echo ... 6502_lib
-	@echo ... 6502_tests
+	@echo ... 6502_load_tests
+	@echo ... 6502_store_tests
 	@echo ... gmock
 	@echo ... gmock_main
 	@echo ... gtest
@@ -348,9 +386,12 @@ help:
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
-	@echo ... test.obj
-	@echo ... test.i
-	@echo ... test.s
+	@echo ... testing/test_load.obj
+	@echo ... testing/test_load.i
+	@echo ... testing/test_load.s
+	@echo ... testing/test_store.obj
+	@echo ... testing/test_store.i
+	@echo ... testing/test_store.s
 .PHONY : help
 
 

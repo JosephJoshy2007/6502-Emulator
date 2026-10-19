@@ -2,10 +2,10 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "6502_tests.exe"
+			"path" : "6502_app.exe"
 		},
 		{
-			"path" : "6502_tests.pdb"
+			"path" : "6502_app.pdb"
 		}
 	],
 	"backtrace" : 1,
@@ -18,8 +18,7 @@
 		],
 		"files" : 
 		[
-			"CMakeLists.txt",
-			"build/_deps/googletest-src/googletest/CMakeLists.txt"
+			"CMakeLists.txt"
 		],
 		"nodes" : 
 		[
@@ -29,23 +28,14 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 24,
+				"line" : 12,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 26,
+				"line" : 13,
 				"parent" : 0
-			},
-			{
-				"file" : 1
-			},
-			{
-				"command" : 1,
-				"file" : 1,
-				"line" : 145,
-				"parent" : 3
 			}
 		]
 	},
@@ -59,10 +49,6 @@
 		{
 			"backtrace" : 2,
 			"id" : "6502_lib::@6890427a1f51a3e7e1df"
-		},
-		{
-			"backtrace" : 2,
-			"id" : "gtest_main::@1ea2dfc0605fe3ab2a3f"
 		}
 	],
 	"compileGroups" : 
@@ -78,13 +64,7 @@
 			[
 				{
 					"backtrace" : 2,
-					"isSystem" : true,
-					"path" : "C:/Users/Admin/Desktop/Joseph/6502 Emulator/build/_deps/googletest-src/googletest/include"
-				},
-				{
-					"backtrace" : 2,
-					"isSystem" : true,
-					"path" : "C:/Users/Admin/Desktop/Joseph/6502 Emulator/build/_deps/googletest-src/googletest"
+					"path" : "C:/Users/Admin/Desktop/Joseph/6502 Emulator"
 				}
 			],
 			"language" : "CXX",
@@ -92,7 +72,7 @@
 			{
 				"backtraces" : 
 				[
-					2
+					1
 				],
 				"standard" : "17"
 			},
@@ -107,17 +87,9 @@
 		{
 			"backtrace" : 2,
 			"id" : "6502_lib::@6890427a1f51a3e7e1df"
-		},
-		{
-			"backtrace" : 2,
-			"id" : "gtest::@1ea2dfc0605fe3ab2a3f"
-		},
-		{
-			"backtrace" : 2,
-			"id" : "gtest_main::@1ea2dfc0605fe3ab2a3f"
 		}
 	],
-	"id" : "6502_tests::@6890427a1f51a3e7e1df",
+	"id" : "6502_app::@6890427a1f51a3e7e1df",
 	"link" : 
 	{
 		"commandFragments" : 
@@ -132,16 +104,6 @@
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 2,
-				"fragment" : "lib\\libgtest_main.a",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 4,
-				"fragment" : "lib\\libgtest.a",
-				"role" : "libraries"
-			},
-			{
 				"fragment" : "-lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32",
 				"role" : "libraries"
 			}
@@ -153,14 +115,10 @@
 		{
 			"backtrace" : 2,
 			"id" : "6502_lib::@6890427a1f51a3e7e1df"
-		},
-		{
-			"backtrace" : 2,
-			"id" : "gtest_main::@1ea2dfc0605fe3ab2a3f"
 		}
 	],
-	"name" : "6502_tests",
-	"nameOnDisk" : "6502_tests.exe",
+	"name" : "6502_app",
+	"nameOnDisk" : "6502_app.exe",
 	"paths" : 
 	{
 		"build" : ".",
@@ -185,7 +143,7 @@
 				1
 			],
 			"compileGroupIndex" : 0,
-			"path" : "test.cpp",
+			"path" : "main.cpp",
 			"sourceGroupIndex" : 0
 		}
 	],

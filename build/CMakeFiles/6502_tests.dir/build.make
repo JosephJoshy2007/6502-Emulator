@@ -71,29 +71,29 @@ include CMakeFiles/6502_tests.dir/flags.make
 CMakeFiles/6502_tests.dir/codegen:
 .PHONY : CMakeFiles/6502_tests.dir/codegen
 
-CMakeFiles/6502_tests.dir/test.cpp.obj: CMakeFiles/6502_tests.dir/flags.make
-CMakeFiles/6502_tests.dir/test.cpp.obj: CMakeFiles/6502_tests.dir/includes_CXX.rsp
-CMakeFiles/6502_tests.dir/test.cpp.obj: C:/Users/Admin/Desktop/Joseph/6502\ Emulator/test.cpp
-CMakeFiles/6502_tests.dir/test.cpp.obj: CMakeFiles/6502_tests.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/6502_tests.dir/test.cpp.obj"
-	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/6502_tests.dir/test.cpp.obj -MF CMakeFiles\6502_tests.dir\test.cpp.obj.d -o CMakeFiles\6502_tests.dir\test.cpp.obj -c "C:\Users\Admin\Desktop\Joseph\6502 Emulator\test.cpp"
+CMakeFiles/6502_tests.dir/testing/test.cpp.obj: CMakeFiles/6502_tests.dir/flags.make
+CMakeFiles/6502_tests.dir/testing/test.cpp.obj: CMakeFiles/6502_tests.dir/includes_CXX.rsp
+CMakeFiles/6502_tests.dir/testing/test.cpp.obj: C:/Users/Admin/Desktop/Joseph/6502\ Emulator/testing/test.cpp
+CMakeFiles/6502_tests.dir/testing/test.cpp.obj: CMakeFiles/6502_tests.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\Admin\Desktop\Joseph\6502 Emulator\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/6502_tests.dir/testing/test.cpp.obj"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/6502_tests.dir/testing/test.cpp.obj -MF CMakeFiles\6502_tests.dir\testing\test.cpp.obj.d -o CMakeFiles\6502_tests.dir\testing\test.cpp.obj -c "C:\Users\Admin\Desktop\Joseph\6502 Emulator\testing\test.cpp"
 
-CMakeFiles/6502_tests.dir/test.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/6502_tests.dir/test.cpp.i"
-	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\Admin\Desktop\Joseph\6502 Emulator\test.cpp" > CMakeFiles\6502_tests.dir\test.cpp.i
+CMakeFiles/6502_tests.dir/testing/test.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/6502_tests.dir/testing/test.cpp.i"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\Admin\Desktop\Joseph\6502 Emulator\testing\test.cpp" > CMakeFiles\6502_tests.dir\testing\test.cpp.i
 
-CMakeFiles/6502_tests.dir/test.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/6502_tests.dir/test.cpp.s"
-	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\Admin\Desktop\Joseph\6502 Emulator\test.cpp" -o CMakeFiles\6502_tests.dir\test.cpp.s
+CMakeFiles/6502_tests.dir/testing/test.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/6502_tests.dir/testing/test.cpp.s"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\Admin\Desktop\Joseph\6502 Emulator\testing\test.cpp" -o CMakeFiles\6502_tests.dir\testing\test.cpp.s
 
 # Object files for target 6502_tests
 6502_tests_OBJECTS = \
-"CMakeFiles/6502_tests.dir/test.cpp.obj"
+"CMakeFiles/6502_tests.dir/testing/test.cpp.obj"
 
 # External object files for target 6502_tests
 6502_tests_EXTERNAL_OBJECTS =
 
-6502_tests.exe: CMakeFiles/6502_tests.dir/test.cpp.obj
+6502_tests.exe: CMakeFiles/6502_tests.dir/testing/test.cpp.obj
 6502_tests.exe: CMakeFiles/6502_tests.dir/build.make
 6502_tests.exe: lib6502_lib.a
 6502_tests.exe: lib/libgtest_main.a

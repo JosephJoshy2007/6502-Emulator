@@ -375,10 +375,10 @@ TEST_F(M6502Test, LDAIndirectYCanLoadIntoARegisterWithPageCrossing) {
     
     mem[0xFFFC] = CPU::INS_LDA_IND_Y; 
     mem[0xFFFD] = 0x10; 
-    cpu.Y = 0xFF; // Y register is 255
-    mem[0x0010] = 0x00; // Low byte of base address
+    cpu.Y = 0x15; // Y register is 21
+    mem[0x0010] = 0xF0; // Low byte of base address
     mem[0x0011] = 0x80; // High byte of base address
-    mem[0x80FF] = 0x77; // Value at effective address (base + Y)
+    mem[0x8105] = 0x77; // Value at effective address (base + Y)
     
     CPU cpuCopy = cpu;
     s32 cyclesUsed = cpu.Execute(mem, 6); // Should take an extra cycle due to page crossing

@@ -55,7 +55,7 @@ void CPU::WriteWord(Memory& memory, s32& cycles, Word address, Word value) {
     cycles -= 2;
 }
 
-void CPU::LOAD_REGISTER_SET_STATUS(Byte& Register) {
+void CPU::ZERO_AND_NEGATIVE_SET_STATUS(Byte& Register) {
     Z = (Register == 0);
     N = (Register & 0b10000000) > 0;
 }
@@ -65,7 +65,7 @@ void CPU::LOAD_REGISTER_ZERO_PAGE_WITH_X_OFFSET(Memory& memory, s32& cycles, Byt
     addr += X;
     cycles--;
     Register = ReadByte(memory, cycles, addr);
-    LOAD_REGISTER_SET_STATUS(Register);
+    ZERO_AND_NEGATIVE_SET_STATUS(Register);
 }
 
 void CPU::LOAD_REGISTER_ZERO_PAGE_WITH_Y_OFFSET(Memory& memory, s32& cycles, Byte& Register) {
@@ -73,7 +73,7 @@ void CPU::LOAD_REGISTER_ZERO_PAGE_WITH_Y_OFFSET(Memory& memory, s32& cycles, Byt
     addr += Y;
     cycles--;
     Register = ReadByte(memory, cycles, addr);
-    LOAD_REGISTER_SET_STATUS(Register);
+    ZERO_AND_NEGATIVE_SET_STATUS(Register);
 }
 
 void CPU::LOAD_REGISTER_ABSOLUTE(Memory& memory, s32& cycles, Byte& Register) {
@@ -81,7 +81,7 @@ void CPU::LOAD_REGISTER_ABSOLUTE(Memory& memory, s32& cycles, Byte& Register) {
     Byte high = FetchByte(memory, cycles);
     Word address = (high << 8) | low;
     Register = ReadByte(memory, cycles, address);
-    LOAD_REGISTER_SET_STATUS(Register);
+    ZERO_AND_NEGATIVE_SET_STATUS(Register);
 }
 
 void CPU::LOAD_REGISTER_ABSOLUTE_WITH_X_OFFSET(Memory& memory, s32& cycles, Byte& Register) {
@@ -94,7 +94,7 @@ void CPU::LOAD_REGISTER_ABSOLUTE_WITH_X_OFFSET(Memory& memory, s32& cycles, Byte
         cycles--; // Extra cycle for page crossing
 
     Register = ReadByte(memory, cycles, address);
-    LOAD_REGISTER_SET_STATUS(Register);
+    ZERO_AND_NEGATIVE_SET_STATUS(Register);
 }
 
 void CPU::LOAD_REGISTER_ABSOLUTE_WITH_Y_OFFSET(Memory& memory, s32& cycles, Byte& Register) {
@@ -107,9 +107,35 @@ void CPU::LOAD_REGISTER_ABSOLUTE_WITH_Y_OFFSET(Memory& memory, s32& cycles, Byte
         cycles--; // Extra cycle for page crossing
 
     Register = ReadByte(memory, cycles, address);
-    LOAD_REGISTER_SET_STATUS(Register);
+    ZERO_AND_NEGATIVE_SET_STATUS(Register);
 }
 
+
+void CPU::STORE_REGISTER_ZERO_PAGE(Memory& memory, s32& cycles, Byte& Register) {
+    Byte addr = FetchByte(memory, cycles);
+    WriteByte(memory, cycles, addr, Register);
+}
+
+void CPU::STORE_REGISTER_ZERO_PAGE_WITH_X_OFFSET(Memory& memory, s32& cycles, Byte& Register) {
+    Byte addr = FetchByte(memory, cycles);
+    addr += X;
+    cycles--;
+    WriteByte(memory, cycles, addr, Register);
+}
+
+void CPU::STORE_REGISTER_ZERO_PAGE_WITH_Y_OFFSET(Memory& memory, s32& cycles, Byte& Register) {
+    Byte addr = FetchByte(memory, cycles);
+    addr += Y;
+    cycles--;
+    WriteByte(memory, cycles, addr, Register);
+}
+
+void CPU::STORE_REGISTER_ABSOLUTE(Memory& memory, s32& cycles, Byte& Register) {
+    Byte low = FetchByte(memory, cycles);
+    Byte high = FetchByte(memory, cycles);
+    Word address = (high << 8) | low;
+    WriteByte(memory, cycles, address, Register);
+}
 
 
 s32 CPU::Execute(Memory& memory, s32 cycles) {
@@ -122,13 +148,15 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
         switch (opcode) {
 
             case INS_NOP:{ // NOP
+                cycles--;
+                cycles--;
                 break;
             }
 
             case INS_LDA_IMM: {
                 Byte value = FetchByte(memory, cycles);
                 A = value;
-                LOAD_REGISTER_SET_STATUS(A);
+                ZERO_AND_NEGATIVE_SET_STATUS(A);
 
                 break;
             }
@@ -136,7 +164,7 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
             case INS_LDX_IMM: {
                 Byte value = FetchByte(memory, cycles);
                 X = value;
-                LOAD_REGISTER_SET_STATUS(X);
+                ZERO_AND_NEGATIVE_SET_STATUS(X);
 
                 break;
             }
@@ -144,7 +172,7 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
             case INS_LDY_IMM: {
                 Byte value = FetchByte(memory, cycles);
                 Y = value;
-                LOAD_REGISTER_SET_STATUS(Y);
+                ZERO_AND_NEGATIVE_SET_STATUS(Y);
 
                 break;
             }
@@ -152,7 +180,7 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
             case INS_LDA_ZP: {
                 Byte addr = FetchByte(memory, cycles);
                 A = ReadByte(memory, cycles, addr);
-                LOAD_REGISTER_SET_STATUS(A);
+                ZERO_AND_NEGATIVE_SET_STATUS(A);
 
                 break;
             }
@@ -160,7 +188,7 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
             case INS_LDX_ZP: {
                 Byte addr = FetchByte(memory, cycles);
                 X = ReadByte(memory, cycles, addr);
-                LOAD_REGISTER_SET_STATUS(X);
+                ZERO_AND_NEGATIVE_SET_STATUS(X);
 
                 break;
             }
@@ -168,7 +196,7 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
             case INS_LDY_ZP: {
                 Byte addr = FetchByte(memory, cycles);
                 Y = ReadByte(memory, cycles, addr);
-                LOAD_REGISTER_SET_STATUS(Y);
+                ZERO_AND_NEGATIVE_SET_STATUS(Y);
 
                 break;
             }
@@ -237,9 +265,10 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
                 Byte effectiveAddrLow = ReadByte(memory, cycles, (zpAddr + X) & 0xFF);
                 Byte effectiveAddrHigh = ReadByte(memory, cycles, (zpAddr + X + 1) & 0xFF);
                 Word effectiveAddress = (effectiveAddrHigh << 8) | effectiveAddrLow;
+                cycles--;
 
                 A = ReadByte(memory, cycles, effectiveAddress);
-                LOAD_REGISTER_SET_STATUS(A);
+                ZERO_AND_NEGATIVE_SET_STATUS(A);
 
                 break;
             }
@@ -255,10 +284,111 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
                     cycles--; // Extra cycle for page crossing
 
                 A = ReadByte(memory, cycles, effectiveAddress);
-                LOAD_REGISTER_SET_STATUS(A);
+                ZERO_AND_NEGATIVE_SET_STATUS(A);
 
                 break;
             }
+
+
+
+
+            case INS_STA_ZP: {
+                STORE_REGISTER_ZERO_PAGE(memory, cycles, A);
+                break;
+            }
+
+            case INS_STX_ZP: {
+                STORE_REGISTER_ZERO_PAGE(memory, cycles, X);
+                break;
+            }
+
+            case INS_STY_ZP: {
+                STORE_REGISTER_ZERO_PAGE(memory, cycles, Y);
+                break;
+            }
+
+            case INS_STA_ZP_X: {
+                STORE_REGISTER_ZERO_PAGE_WITH_X_OFFSET(memory, cycles, A);
+                break;
+            }
+
+            case INS_STX_ZP_Y: {
+                STORE_REGISTER_ZERO_PAGE_WITH_Y_OFFSET(memory, cycles, X);
+                break;
+            }
+
+            case INS_STY_ZP_X: {
+                STORE_REGISTER_ZERO_PAGE_WITH_X_OFFSET(memory, cycles, Y);
+                break;
+            }
+
+            case INS_STA_ABS: {
+                STORE_REGISTER_ABSOLUTE(memory, cycles, A);
+                break;
+            }
+
+            case INS_STX_ABS: {
+                STORE_REGISTER_ABSOLUTE(memory, cycles, X);
+                break;
+            }
+
+            case INS_STY_ABS: {
+                STORE_REGISTER_ABSOLUTE(memory, cycles, Y);
+                break;
+            }
+
+            case INS_STA_ABS_X: {
+                Byte low = FetchByte(memory, cycles);
+                Byte high = FetchByte(memory, cycles);
+                Word address = (high << 8) | low;
+                address += X;
+                cycles--;
+
+                WriteByte(memory, cycles, address, A);
+
+                break;
+            }
+
+            case INS_STA_ABS_Y: {
+                Byte low = FetchByte(memory, cycles);
+                Byte high = FetchByte(memory, cycles);
+                Word address = (high << 8) | low;
+                address += Y;
+                cycles--;
+
+                WriteByte(memory, cycles, address, A);
+
+                break;
+            }
+
+            case INS_STA_IND_X: {
+                Byte zpAddr = FetchByte(memory, cycles);
+                Byte effectiveAddrLow = ReadByte(memory, cycles, (zpAddr + X) & 0xFF);
+                Byte effectiveAddrHigh = ReadByte(memory, cycles, (zpAddr + X + 1) & 0xFF);
+                Word effectiveAddress = (effectiveAddrHigh << 8) | effectiveAddrLow;
+                cycles--;
+
+                WriteByte(memory, cycles, effectiveAddress, A);
+
+                break;
+            }
+
+            case INS_STA_IND_Y: {
+                Byte zpAddr = FetchByte(memory, cycles);
+                Byte effectiveAddrLow = ReadByte(memory, cycles, zpAddr);
+                Byte effectiveAddrHigh = ReadByte(memory, cycles, (zpAddr + 1) & 0xFF);
+                Word effectiveAddress = (effectiveAddrHigh << 8) | effectiveAddrLow;
+                effectiveAddress += Y;
+
+                cycles--;
+
+                WriteByte(memory, cycles, effectiveAddress, A);
+
+                break;
+            }
+
+
+
 
             case INS_JMP_ABS: {
                 Byte low = FetchByte(memory, cycles);
@@ -288,7 +418,7 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
             }
 
             default:
-                printf("Unknown opcode: 0x%02X\n", opcode);
+                printf("Unknown opcode: 0x%02X at PC: 0x%04X\n", opcode, PC-1);
                 break;
         }
         

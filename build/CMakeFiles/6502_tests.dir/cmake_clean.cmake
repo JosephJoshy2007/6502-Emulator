@@ -2,8 +2,8 @@ file(REMOVE_RECURSE
   "6502_tests.exe"
   "6502_tests.exe.manifest"
   "6502_tests.pdb"
-  "CMakeFiles/6502_tests.dir/test.cpp.obj"
-  "CMakeFiles/6502_tests.dir/test.cpp.obj.d"
+  "CMakeFiles/6502_tests.dir/testing/test.cpp.obj"
+  "CMakeFiles/6502_tests.dir/testing/test.cpp.obj.d"
   "lib6502_tests.dll.a"
 )
 

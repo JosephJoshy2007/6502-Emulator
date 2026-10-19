@@ -7,7 +7,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "Git::Git::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-Git__Git-Debug-eb0a6bfd8ffd3798de1a.json",
+					"jsonFile" : "target-Git__Git-Debug-345b2233710a8a59f8a0.json",
 					"name" : "Git::Git",
 					"projectIndex" : 0
 				},
@@ -50,7 +50,8 @@
 					[
 						0,
 						1,
-						2
+						2,
+						3
 					]
 				},
 				{
@@ -76,7 +77,7 @@
 						3
 					],
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-_deps.googletest-build.googlemock-Debug-55e180fd3eaf3bced769.json",
+					"jsonFile" : "directory-_deps.googletest-build.googlemock-Debug-b43ac714cd780d3745be.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.5"
@@ -86,8 +87,8 @@
 					"source" : "build/_deps/googletest-src/googlemock",
 					"targetIndexes" : 
 					[
-						3,
-						4
+						4,
+						5
 					]
 				},
 				{
@@ -98,7 +99,7 @@
 					],
 					"build" : "_deps/googletest-build/googletest",
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-_deps.googletest-build.googletest-Debug-0a7b0995520c0cf64c76.json",
+					"jsonFile" : "directory-_deps.googletest-build.googletest-Debug-72cb1c8b036936e2ff42.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.5"
@@ -108,8 +109,8 @@
 					"source" : "build/_deps/googletest-src/googletest",
 					"targetIndexes" : 
 					[
-						5,
-						6
+						6,
+						7
 					]
 				}
 			],
@@ -134,7 +135,8 @@
 					[
 						0,
 						1,
-						2
+						2,
+						3
 					]
 				},
 				{
@@ -162,8 +164,8 @@
 					"parentIndex" : 1,
 					"targetIndexes" : 
 					[
-						3,
-						4
+						4,
+						5
 					]
 				},
 				{
@@ -180,8 +182,8 @@
 					"parentIndex" : 2,
 					"targetIndexes" : 
 					[
-						5,
-						6
+						6,
+						7
 					]
 				}
 			],
@@ -190,22 +192,29 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "6502_app::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-6502_app-Debug-bcbfce443ab2c2dceb0d.json",
+					"jsonFile" : "target-6502_app-Debug-6815efb7c361e96ce72a.json",
 					"name" : "6502_app",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "6502_lib::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-6502_lib-Debug-a354bbece007ef885e68.json",
+					"jsonFile" : "target-6502_lib-Debug-ff4b8b2588228b89e9f2.json",
 					"name" : "6502_lib",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
-					"id" : "6502_tests::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-6502_tests-Debug-409fdade7a0072a7eae2.json",
-					"name" : "6502_tests",
+					"id" : "6502_load_tests::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-6502_load_tests-Debug-bb4691bb71a7566ef2fd.json",
+					"name" : "6502_load_tests",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "6502_store_tests::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-6502_store_tests-Debug-97007aa571dee11d3e4d.json",
+					"name" : "6502_store_tests",
 					"projectIndex" : 0
 				},
 				{

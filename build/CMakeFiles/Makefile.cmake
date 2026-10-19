@@ -93,7 +93,8 @@ set(CMAKE_MAKEFILE_PRODUCTS
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/6502_lib.dir/DependInfo.cmake"
   "CMakeFiles/6502_app.dir/DependInfo.cmake"
-  "CMakeFiles/6502_tests.dir/DependInfo.cmake"
+  "CMakeFiles/6502_load_tests.dir/DependInfo.cmake"
+  "CMakeFiles/6502_store_tests.dir/DependInfo.cmake"
   "_deps/googletest-build/googlemock/CMakeFiles/gmock.dir/DependInfo.cmake"
   "_deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/DependInfo.cmake"
   "_deps/googletest-build/googletest/CMakeFiles/gtest.dir/DependInfo.cmake"
