@@ -2,7 +2,7 @@
 #include "m6502.h"
 
 // The test fixture sets up a fresh CPU and Memory before every single test
-class M6502Test : public ::testing::Test {
+class M6502JumpTest : public ::testing::Test {
 protected:
     Memory mem;
     CPU cpu;
@@ -28,7 +28,7 @@ void VerifyUnchangedFlags(const CPU& current, const CPU& original) {
     EXPECT_EQ(current.N, original.N);
 }
 
-TEST_F(M6502Test, JMPABSCanJump) {
+TEST_F(M6502JumpTest, JMPABSCanJump) {
     
     mem[0xFFFC] = CPU::INS_JMP_ABS; 
     mem[0xFFFD] = 0x00; 
@@ -45,7 +45,7 @@ TEST_F(M6502Test, JMPABSCanJump) {
     VerifyUnchangedFlags(cpu, cpuCopy);
 }
 
-TEST_F(M6502Test, JSRCanJumpAndPushReturnAddress) {
+TEST_F(M6502JumpTest, JSRCanJumpAndPushReturnAddress) {
     
     mem[0xFFFC] = CPU::INS_JSR; 
     mem[0xFFFD] = 0x00; 
@@ -66,7 +66,7 @@ TEST_F(M6502Test, JSRCanJumpAndPushReturnAddress) {
     VerifyUnchangedFlags(cpu, cpuCopy);
 }
 
-TEST_F(M6502Test, RTSCanReturnFromSubroutine) {
+TEST_F(M6502JumpTest, RTSCanReturnFromSubroutine) {
     
     // Set up a JSR to 0x8000
     mem[0xFFFC] = CPU::INS_JSR; 
@@ -87,7 +87,7 @@ TEST_F(M6502Test, RTSCanReturnFromSubroutine) {
     VerifyUnchangedFlags(cpu, cpuCopy);
 }
 
-TEST_F(M6502Test, JMPINDCanJump) {
+TEST_F(M6502JumpTest, JMPINDCanJump) {
     
     // Set up a JMP (indirect) to address stored at 0x8000
     mem[0xFFFC] = CPU::INS_JMP_IND; 

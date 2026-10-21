@@ -226,6 +226,19 @@ depend:
 .PHONY : 6502_jump_tests/fast
 
 #=============================================================================
+# Target rules for targets named 6502_stack_tests
+
+# Build rule for target.
+6502_stack_tests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 6502_stack_tests
+.PHONY : 6502_stack_tests
+
+# fast build rule for target.
+6502_stack_tests/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_stack_tests.dir\build.make CMakeFiles/6502_stack_tests.dir/build
+.PHONY : 6502_stack_tests/fast
+
+#=============================================================================
 # Target rules for targets named gmock
 
 # Build rule for target.
@@ -373,6 +386,30 @@ testing/test_load.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_load_tests.dir\build.make CMakeFiles/6502_load_tests.dir/testing/test_load.cpp.s
 .PHONY : testing/test_load.cpp.s
 
+testing/test_stack.obj: testing/test_stack.cpp.obj
+.PHONY : testing/test_stack.obj
+
+# target to build an object file
+testing/test_stack.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_stack_tests.dir\build.make CMakeFiles/6502_stack_tests.dir/testing/test_stack.cpp.obj
+.PHONY : testing/test_stack.cpp.obj
+
+testing/test_stack.i: testing/test_stack.cpp.i
+.PHONY : testing/test_stack.i
+
+# target to preprocess a source file
+testing/test_stack.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_stack_tests.dir\build.make CMakeFiles/6502_stack_tests.dir/testing/test_stack.cpp.i
+.PHONY : testing/test_stack.cpp.i
+
+testing/test_stack.s: testing/test_stack.cpp.s
+.PHONY : testing/test_stack.s
+
+# target to generate assembly for a file
+testing/test_stack.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_stack_tests.dir\build.make CMakeFiles/6502_stack_tests.dir/testing/test_stack.cpp.s
+.PHONY : testing/test_stack.cpp.s
+
 testing/test_store.obj: testing/test_store.cpp.obj
 .PHONY : testing/test_store.obj
 
@@ -413,6 +450,7 @@ help:
 	@echo ... 6502_jump_tests
 	@echo ... 6502_lib
 	@echo ... 6502_load_tests
+	@echo ... 6502_stack_tests
 	@echo ... 6502_store_tests
 	@echo ... gmock
 	@echo ... gmock_main
@@ -430,6 +468,9 @@ help:
 	@echo ... testing/test_load.obj
 	@echo ... testing/test_load.i
 	@echo ... testing/test_load.s
+	@echo ... testing/test_stack.obj
+	@echo ... testing/test_stack.i
+	@echo ... testing/test_stack.s
 	@echo ... testing/test_store.obj
 	@echo ... testing/test_store.i
 	@echo ... testing/test_store.s

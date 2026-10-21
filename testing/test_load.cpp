@@ -2,7 +2,7 @@
 #include "m6502.h"
 
 // The test fixture sets up a fresh CPU and Memory before every single test
-class M6502Test : public ::testing::Test {
+class M6502LoadTest : public ::testing::Test {
 protected:
     Memory mem;
     CPU cpu;
@@ -205,7 +205,7 @@ void TestLoadRegisterAbsoluteWithYOffsetAndPageCrossing(CPU& cpu, Memory& mem, B
 }
 
 
-TEST_F(M6502Test, CPUDoesNothingWhenNoInstructionsAreExecuted) {
+TEST_F(M6502LoadTest, CPUDoesNothingWhenNoInstructionsAreExecuted) {
     CPU cpuCopy = cpu;
     s32 cyclesUsed = cpu.Execute(mem, 0);
     
@@ -218,7 +218,7 @@ TEST_F(M6502Test, CPUDoesNothingWhenNoInstructionsAreExecuted) {
     VerifyUnchangedFlagsForLoad(cpu, cpuCopy);
 }
 
-TEST_F(M6502Test, ExecutingABadInstructionDoesNotCauseInfiniteLoop) {
+TEST_F(M6502LoadTest, ExecutingABadInstructionDoesNotCauseInfiniteLoop) {
     mem[0xFFFC] = 0x00; // Invalid opcode
     mem[0xFFFD] = 0x00; // Just to have some data after the invalid opcode
     CPU cpuCopy = cpu;
@@ -230,108 +230,108 @@ TEST_F(M6502Test, ExecutingABadInstructionDoesNotCauseInfiniteLoop) {
 
 
 // A simple test for the Load Accumulator (LDA) Immediate instruction
-TEST_F(M6502Test, LDAImmediateCanLoadValueIntoARegister) {
+TEST_F(M6502LoadTest, LDAImmediateCanLoadValueIntoARegister) {
     // Given: Program memory set up with an LDA instruction (0xA9) and a value (0x84)
     TestLoadRegisterImmediate(cpu, mem, CPU::INS_LDA_IMM, &CPU::A);
 }
 
-TEST_F(M6502Test, LDXImmediateCanLoadValueIntoXRegister) {
+TEST_F(M6502LoadTest, LDXImmediateCanLoadValueIntoXRegister) {
     // Given: Program memory set up with an LDX instruction (0xA2) and a value (0x84)
     TestLoadRegisterImmediate(cpu, mem, CPU::INS_LDX_IMM, &CPU::X);
 }
 
-TEST_F(M6502Test, LDYImmediateCanLoadValueIntoYRegister) {
+TEST_F(M6502LoadTest, LDYImmediateCanLoadValueIntoYRegister) {
     // Given: Program memory set up with an LDY instruction (0xA0) and a value (0x84)
     TestLoadRegisterImmediate(cpu, mem, CPU::INS_LDY_IMM, &CPU::Y);
 }
 
-TEST_F(M6502Test, LDAZeroPageCanLoadValueIntoARegister) {
+TEST_F(M6502LoadTest, LDAZeroPageCanLoadValueIntoARegister) {
     
     TestLoadRegisterZeroPage(cpu, mem, CPU::INS_LDA_ZP, &CPU::A);
 }
 
-TEST_F(M6502Test, LDXZeroPageCanLoadValueIntoXRegister) {
+TEST_F(M6502LoadTest, LDXZeroPageCanLoadValueIntoXRegister) {
     
     TestLoadRegisterZeroPage(cpu, mem, CPU::INS_LDX_ZP, &CPU::X);
 }
 
-TEST_F(M6502Test, LDYZeroPageCanLoadValueIntoYRegister) {
+TEST_F(M6502LoadTest, LDYZeroPageCanLoadValueIntoYRegister) {
     
     TestLoadRegisterZeroPage(cpu, mem, CPU::INS_LDY_ZP, &CPU::Y);
 }
 
-TEST_F(M6502Test, LDAZeroPageXCanLoadValueIntoARegister) {
+TEST_F(M6502LoadTest, LDAZeroPageXCanLoadValueIntoARegister) {
     
     TestLoadRegisterZeroPageWithXOffset(cpu, mem, CPU::INS_LDA_ZP_X, &CPU::A);
 }
 
-TEST_F(M6502Test, LDXZeroPageYCanLoadValueIntoXRegister) {
+TEST_F(M6502LoadTest, LDXZeroPageYCanLoadValueIntoXRegister) {
     
     TestLoadRegisterZeroPageWithYOffset(cpu, mem, CPU::INS_LDX_ZP_Y, &CPU::X);
 }
 
-TEST_F(M6502Test, LDYZeroPageXCanLoadValueIntoYRegister) {
+TEST_F(M6502LoadTest, LDYZeroPageXCanLoadValueIntoYRegister) {
     
     TestLoadRegisterZeroPageWithXOffset(cpu, mem, CPU::INS_LDY_ZP_X, &CPU::Y);
 }
 
-TEST_F(M6502Test, LDAAbsoluteCanLoadValueIntoARegister) {
+TEST_F(M6502LoadTest, LDAAbsoluteCanLoadValueIntoARegister) {
     
     TestLoadRegisterAbsolute(cpu, mem, CPU::INS_LDA_ABS, &CPU::A);
 }
 
-TEST_F(M6502Test, LDXAbsoluteCanLoadValueIntoXRegister) {
+TEST_F(M6502LoadTest, LDXAbsoluteCanLoadValueIntoXRegister) {
     
     TestLoadRegisterAbsolute(cpu, mem, CPU::INS_LDX_ABS, &CPU::X);
 }
 
-TEST_F(M6502Test, LDYAbsoluteCanLoadValueIntoYRegister) {
+TEST_F(M6502LoadTest, LDYAbsoluteCanLoadValueIntoYRegister) {
     
     TestLoadRegisterAbsolute(cpu, mem, CPU::INS_LDY_ABS, &CPU::Y);
 }
 
 
-TEST_F(M6502Test, LDAAbsoluteXCanLoadIntoARegister){
+TEST_F(M6502LoadTest, LDAAbsoluteXCanLoadIntoARegister){
 
     TestLoadRegisterAbsoluteWithXOffset(cpu, mem, CPU::INS_LDA_ABS_X, &CPU::A);
 }
 
-TEST_F(M6502Test, LDAAbsoluteYCanLoadIntoARegister){
+TEST_F(M6502LoadTest, LDAAbsoluteYCanLoadIntoARegister){
 
     TestLoadRegisterAbsoluteWithYOffset(cpu, mem, CPU::INS_LDA_ABS_Y, &CPU::A);
 }
 
-TEST_F(M6502Test, LDXAbsoluteYCanLoadIntoXRegister){
+TEST_F(M6502LoadTest, LDXAbsoluteYCanLoadIntoXRegister){
 
     TestLoadRegisterAbsoluteWithYOffset(cpu, mem, CPU::INS_LDX_ABS_Y, &CPU::X);
 }
 
-TEST_F(M6502Test, LDYAbsoluteXCanLoadIntoYRegister){
+TEST_F(M6502LoadTest, LDYAbsoluteXCanLoadIntoYRegister){
 
     TestLoadRegisterAbsoluteWithXOffset(cpu, mem, CPU::INS_LDY_ABS_X, &CPU::Y);
 }
 
-TEST_F(M6502Test, LDAAbsoluteXCanLoadIntoARegisterWithPageCrossing){
+TEST_F(M6502LoadTest, LDAAbsoluteXCanLoadIntoARegisterWithPageCrossing){
 
     TestLoadRegisterAbsoluteWithXOffsetAndPageCrossing(cpu, mem, CPU::INS_LDA_ABS_X, &CPU::A);
 }
 
-TEST_F(M6502Test, LDAAbsoluteYCanLoadIntoARegisterWithPageCrossing){
+TEST_F(M6502LoadTest, LDAAbsoluteYCanLoadIntoARegisterWithPageCrossing){
 
     TestLoadRegisterAbsoluteWithYOffsetAndPageCrossing(cpu, mem, CPU::INS_LDA_ABS_Y, &CPU::A);
 }
 
-TEST_F(M6502Test, LDXAbsoluteYCanLoadIntoXRegisterWithPageCrossing){
+TEST_F(M6502LoadTest, LDXAbsoluteYCanLoadIntoXRegisterWithPageCrossing){
 
     TestLoadRegisterAbsoluteWithYOffsetAndPageCrossing(cpu, mem, CPU::INS_LDX_ABS_Y, &CPU::X);
 }
 
-TEST_F(M6502Test, LDYAbsoluteXCanLoadIntoYRegisterWithPageCrossing){
+TEST_F(M6502LoadTest, LDYAbsoluteXCanLoadIntoYRegisterWithPageCrossing){
 
     TestLoadRegisterAbsoluteWithXOffsetAndPageCrossing(cpu, mem, CPU::INS_LDY_ABS_X, &CPU::Y);
 }
 
-TEST_F(M6502Test, LDAIndirectXCanLoadIntoARegister) {
+TEST_F(M6502LoadTest, LDAIndirectXCanLoadIntoARegister) {
     
     mem[0xFFFC] = CPU::INS_LDA_IND_X; 
     mem[0xFFFD] = 0x10; 
@@ -351,7 +351,7 @@ TEST_F(M6502Test, LDAIndirectXCanLoadIntoARegister) {
     VerifyUnchangedFlagsForLoad(cpu, cpuCopy);
 }
 
-TEST_F(M6502Test, LDAIndirectYCanLoadIntoARegister) {
+TEST_F(M6502LoadTest, LDAIndirectYCanLoadIntoARegister) {
     
     mem[0xFFFC] = CPU::INS_LDA_IND_Y; 
     mem[0xFFFD] = 0x10; 
@@ -371,7 +371,7 @@ TEST_F(M6502Test, LDAIndirectYCanLoadIntoARegister) {
     VerifyUnchangedFlagsForLoad(cpu, cpuCopy);
 }
 
-TEST_F(M6502Test, LDAIndirectYCanLoadIntoARegisterWithPageCrossing) {
+TEST_F(M6502LoadTest, LDAIndirectYCanLoadIntoARegisterWithPageCrossing) {
     
     mem[0xFFFC] = CPU::INS_LDA_IND_Y; 
     mem[0xFFFD] = 0x10; 

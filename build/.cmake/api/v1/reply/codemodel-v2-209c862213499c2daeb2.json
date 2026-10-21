@@ -52,7 +52,8 @@
 						1,
 						2,
 						3,
-						4
+						4,
+						5
 					]
 				},
 				{
@@ -78,7 +79,7 @@
 						3
 					],
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-_deps.googletest-build.googlemock-Debug-f224e8c2aae817d59a9a.json",
+					"jsonFile" : "directory-_deps.googletest-build.googlemock-Debug-b581ca15d06e173b3404.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.5"
@@ -88,8 +89,8 @@
 					"source" : "build/_deps/googletest-src/googlemock",
 					"targetIndexes" : 
 					[
-						5,
-						6
+						6,
+						7
 					]
 				},
 				{
@@ -100,7 +101,7 @@
 					],
 					"build" : "_deps/googletest-build/googletest",
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-_deps.googletest-build.googletest-Debug-50076ce9e2f168ef8319.json",
+					"jsonFile" : "directory-_deps.googletest-build.googletest-Debug-00ee641467ac395f639e.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.5"
@@ -110,8 +111,8 @@
 					"source" : "build/_deps/googletest-src/googletest",
 					"targetIndexes" : 
 					[
-						7,
-						8
+						8,
+						9
 					]
 				}
 			],
@@ -138,7 +139,8 @@
 						1,
 						2,
 						3,
-						4
+						4,
+						5
 					]
 				},
 				{
@@ -166,8 +168,8 @@
 					"parentIndex" : 1,
 					"targetIndexes" : 
 					[
-						5,
-						6
+						6,
+						7
 					]
 				},
 				{
@@ -184,8 +186,8 @@
 					"parentIndex" : 2,
 					"targetIndexes" : 
 					[
-						7,
-						8
+						8,
+						9
 					]
 				}
 			],
@@ -217,6 +219,13 @@
 					"id" : "6502_load_tests::@6890427a1f51a3e7e1df",
 					"jsonFile" : "target-6502_load_tests-Debug-bb4691bb71a7566ef2fd.json",
 					"name" : "6502_load_tests",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "6502_stack_tests::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-6502_stack_tests-Debug-142490b69d7a1322e74c.json",
+					"name" : "6502_stack_tests",
 					"projectIndex" : 0
 				},
 				{

@@ -44,6 +44,27 @@ Byte CPU::ReadByte(Memory& memory,s32& cycles, Word address) {
     return memory[address];
 }
 
+Byte CPU::GetStatusRegister() const {
+        return (C << 0) |
+               (Z << 1) |
+               (I << 2) |
+               (D << 3) |
+               (B << 4) |
+               (1 << 5) | // Bit 5: ALWAYS 1 when pushed
+               (V << 6) |
+               (N << 7);
+}
+
+void CPU::SetStatusRegister(Byte status) {
+        C = (status >> 0) & 1;
+        Z = (status >> 1) & 1;
+        I = (status >> 2) & 1;
+        D = (status >> 3) & 1;
+        // Bits 4 & 5 are not written back to hardware registers
+        V = (status >> 6) & 1;
+        N = (status >> 7) & 1;
+}
+
 void CPU::WriteByte(Memory& memory, s32& cycles, Word address, Byte value) {
     memory[address] = value;
     cycles--;
@@ -445,6 +466,57 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
 
                 break;
             }
+
+
+
+
+            case INS_TSX: {
+                X = SP;
+                ZERO_AND_NEGATIVE_SET_STATUS(X);
+                cycles--;
+                break;
+            }
+
+            case INS_TXS: {
+                SP = X;
+                cycles--;
+                break;
+            }
+
+            case INS_PHA: {
+                WriteByte(memory, cycles, SP | 0x100, A);
+                SP--;
+                cycles--;
+                break;
+            }
+
+            case INS_PLA: {
+                SP++;
+                cycles--;
+                A = ReadByte(memory, cycles, SP | 0x100);
+                ZERO_AND_NEGATIVE_SET_STATUS(A);
+                cycles--;
+                break;
+            }
+
+            case INS_PHP: {
+                Byte status = GetStatusRegister();
+                WriteByte(memory, cycles, SP | 0x100, status);
+                SP--;
+                cycles--;
+                break;
+            }
+
+            case INS_PLP: {
+                SP++;
+                Byte status = ReadByte(memory, cycles, SP | 0x100);
+                SetStatusRegister(status);
+                cycles -=2;
+                break;
+            }
+
+
+
 
             default:
                 printf("Unknown opcode: 0x%02X at PC: 0x%04X\n", opcode, PC-1);

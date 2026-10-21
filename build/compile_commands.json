@@ -30,6 +30,12 @@
   "output": "CMakeFiles/6502_jump_tests.dir/testing/test_jump.cpp.obj"
 },
 {
+  "directory": "C:/Users/Admin/Desktop/Joseph/6502 Emulator/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles\\6502_stack_tests.dir\\includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\6502_stack_tests.dir\\testing\\test_stack.cpp.obj -c \"C:\\Users\\Admin\\Desktop\\Joseph\\6502 Emulator\\testing\\test_stack.cpp\"",
+  "file": "C:/Users/Admin/Desktop/Joseph/6502 Emulator/testing/test_stack.cpp",
+  "output": "CMakeFiles/6502_stack_tests.dir/testing/test_stack.cpp.obj"
+},
+{
   "directory": "C:/Users/Admin/Desktop/Joseph/6502 Emulator/build/_deps/googletest-build/googlemock",
   "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles\\gmock.dir\\includes_CXX.rsp -g -std=c++17 -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=0 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -o CMakeFiles\\gmock.dir\\src\\gmock-all.cc.obj -c \"C:\\Users\\Admin\\Desktop\\Joseph\\6502 Emulator\\build\\_deps\\googletest-src\\googlemock\\src\\gmock-all.cc\"",
   "file": "C:/Users/Admin/Desktop/Joseph/6502 Emulator/build/_deps/googletest-src/googlemock/src/gmock-all.cc",

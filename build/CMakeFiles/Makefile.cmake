@@ -96,6 +96,7 @@ set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/6502_load_tests.dir/DependInfo.cmake"
   "CMakeFiles/6502_store_tests.dir/DependInfo.cmake"
   "CMakeFiles/6502_jump_tests.dir/DependInfo.cmake"
+  "CMakeFiles/6502_stack_tests.dir/DependInfo.cmake"
   "_deps/googletest-build/googlemock/CMakeFiles/gmock.dir/DependInfo.cmake"
   "_deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/DependInfo.cmake"
   "_deps/googletest-build/googletest/CMakeFiles/gtest.dir/DependInfo.cmake"

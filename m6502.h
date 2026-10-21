@@ -36,6 +36,10 @@ struct CPU{
 
     void Reset(Memory& memory);
 
+    Byte GetStatusRegister() const;
+
+    void SetStatusRegister(Byte status);
+
     Byte FetchByte(Memory& memory, s32& cycles);
 
     Byte ReadByte(Memory& memory,s32& cycles, Word address);
@@ -115,7 +119,15 @@ struct CPU{
         INS_JSR = 0x20,
         INS_JMP_ABS = 0x4C,
         INS_JMP_IND = 0x6C,
-        INS_RTS = 0x60;
+        INS_RTS = 0x60,
+        
+        //Stack
+        INS_TSX = 0xBA,
+        INS_TXS = 0x9A,
+        INS_PHA = 0x48,
+        INS_PLA = 0x68,
+        INS_PHP = 0x08,
+        INS_PLP = 0x28;
 
     s32 Execute(Memory& memory, s32 cycles);
     

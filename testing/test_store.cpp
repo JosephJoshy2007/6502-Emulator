@@ -2,7 +2,7 @@
 #include "m6502.h"
 
 // The test fixture sets up a fresh CPU and Memory before every single test
-class M6502Test : public ::testing::Test {
+class M6502StoreTest : public ::testing::Test {
 protected:
     Memory mem;
     CPU cpu;
@@ -91,43 +91,43 @@ void TestStoreRegisterAbsolute(CPU& cpu, Memory& mem, Byte opcode, Byte CPU::*Re
     VerifyUnchangedFlagsForLoad(cpu, cpuCopy);
 }
 
-TEST_F(M6502Test, STAZeroPageCanStoreARegisterIntoMemory) {
+TEST_F(M6502StoreTest, STAZeroPageCanStoreARegisterIntoMemory) {
     TestStoreRegisterZeroPage(cpu, mem, CPU::INS_STA_ZP, &CPU::A);
 }
 
-TEST_F(M6502Test, STXZeroPageCanStoreARegisterIntoMemory) {
+TEST_F(M6502StoreTest, STXZeroPageCanStoreARegisterIntoMemory) {
     TestStoreRegisterZeroPage(cpu, mem, CPU::INS_STX_ZP, &CPU::X);
 }
 
-TEST_F(M6502Test, STYZeroPageCanStoreARegisterIntoMemory) {
+TEST_F(M6502StoreTest, STYZeroPageCanStoreARegisterIntoMemory) {
     TestStoreRegisterZeroPage(cpu, mem, CPU::INS_STY_ZP, &CPU::Y);
 }
 
-TEST_F(M6502Test, STAZeroPageXCanStoreARegisterIntoMemory) {
+TEST_F(M6502StoreTest, STAZeroPageXCanStoreARegisterIntoMemory) {
     TestStoreRegisterWithXOffset(cpu, mem, CPU::INS_STA_ZP_X, &CPU::A);
 }
 
-TEST_F(M6502Test, STXZeroPageYCanStoreARegisterIntoMemory) {
+TEST_F(M6502StoreTest, STXZeroPageYCanStoreARegisterIntoMemory) {
     TestStoreRegisterWithYOffset(cpu, mem, CPU::INS_STX_ZP_Y, &CPU::X);
 }
 
-TEST_F(M6502Test, STYZeroPageXCanStoreARegisterIntoMemory) {
+TEST_F(M6502StoreTest, STYZeroPageXCanStoreARegisterIntoMemory) {
     TestStoreRegisterWithXOffset(cpu, mem, CPU::INS_STY_ZP_X, &CPU::Y);
 }
 
-TEST_F(M6502Test, STAAbsoluteCanStoreARegisterIntoMemory) {
+TEST_F(M6502StoreTest, STAAbsoluteCanStoreARegisterIntoMemory) {
     TestStoreRegisterAbsolute(cpu, mem, CPU::INS_STA_ABS, &CPU::A);
 }
 
-TEST_F(M6502Test, STXAbsoluteCanStoreARegisterIntoMemory) {
+TEST_F(M6502StoreTest, STXAbsoluteCanStoreARegisterIntoMemory) {
     TestStoreRegisterAbsolute(cpu, mem, CPU::INS_STX_ABS, &CPU::X);
 }
 
-TEST_F(M6502Test, STYAbsoluteCanStoreARegisterIntoMemory) {
+TEST_F(M6502StoreTest, STYAbsoluteCanStoreARegisterIntoMemory) {
     TestStoreRegisterAbsolute(cpu, mem, CPU::INS_STY_ABS, &CPU::Y);
 }
 
-TEST_F(M6502Test, STAAbsoluteWithXOffsetCanStoreARegisterIntoMemory) {
+TEST_F(M6502StoreTest, STAAbsoluteWithXOffsetCanStoreARegisterIntoMemory) {
     mem[0xFFFC] = CPU::INS_STA_ABS_X;
     mem[0xFFFD] = 0x00;
     mem[0xFFFE] = 0x80;
@@ -143,7 +143,7 @@ TEST_F(M6502Test, STAAbsoluteWithXOffsetCanStoreARegisterIntoMemory) {
     VerifyUnchangedFlagsForLoad(cpu, cpuCopy);
 }
 
-TEST_F(M6502Test, STAAbsoluteWithYOffsetCanStoreARegisterIntoMemory) {
+TEST_F(M6502StoreTest, STAAbsoluteWithYOffsetCanStoreARegisterIntoMemory) {
     mem[0xFFFC] = CPU::INS_STA_ABS_Y;
     mem[0xFFFD] = 0x00;
     mem[0xFFFE] = 0x80;
@@ -159,7 +159,7 @@ TEST_F(M6502Test, STAAbsoluteWithYOffsetCanStoreARegisterIntoMemory) {
     VerifyUnchangedFlagsForLoad(cpu, cpuCopy);
 }
 
-TEST_F(M6502Test, STAIndirectXCanStoreARegisterIntoMemory) {
+TEST_F(M6502StoreTest, STAIndirectXCanStoreARegisterIntoMemory) {
     mem[0xFFFC] = CPU::INS_STA_IND_X;
     mem[0xFFFD] = 0x10; // Zero page address
     cpu.X = 0x05; // X offset
@@ -178,7 +178,7 @@ TEST_F(M6502Test, STAIndirectXCanStoreARegisterIntoMemory) {
     VerifyUnchangedFlagsForLoad(cpu, cpuCopy);
 }
 
-TEST_F(M6502Test, STAIndirectYCanStoreARegisterIntoMemory) {
+TEST_F(M6502StoreTest, STAIndirectYCanStoreARegisterIntoMemory) {
     mem[0xFFFC] = CPU::INS_STA_IND_Y;
     mem[0xFFFD] = 0x10; // Zero page address
     cpu.Y = 0x15; // Y offset

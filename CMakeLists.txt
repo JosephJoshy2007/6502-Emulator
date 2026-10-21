@@ -29,3 +29,6 @@ target_link_libraries(6502_store_tests PRIVATE 6502_lib GTest::gtest_main)
 
 add_executable(6502_jump_tests testing/test_jump.cpp)
 target_link_libraries(6502_jump_tests PRIVATE 6502_lib GTest::gtest_main)
+
+add_executable(6502_stack_tests testing/test_stack.cpp)
+target_link_libraries(6502_stack_tests PRIVATE 6502_lib GTest::gtest_main)
