@@ -1,2 +1,0 @@
-C:\msys64\ucrt64\bin\ar.exe qc lib6502_lib.a CMakeFiles/6502_lib.dir/m6502.cpp.obj
-C:\msys64\ucrt64\bin\ranlib.exe lib6502_lib.a
