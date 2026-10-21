@@ -4,6 +4,7 @@ C:/Users/Admin/Desktop/Joseph/6502 Emulator/build/CMakeFiles/6502_load_tests.dir
 C:/Users/Admin/Desktop/Joseph/6502 Emulator/build/CMakeFiles/6502_store_tests.dir
 C:/Users/Admin/Desktop/Joseph/6502 Emulator/build/CMakeFiles/6502_jump_tests.dir
 C:/Users/Admin/Desktop/Joseph/6502 Emulator/build/CMakeFiles/6502_stack_tests.dir
+C:/Users/Admin/Desktop/Joseph/6502 Emulator/build/CMakeFiles/6502_logical_tests.dir
 C:/Users/Admin/Desktop/Joseph/6502 Emulator/build/CMakeFiles/edit_cache.dir
 C:/Users/Admin/Desktop/Joseph/6502 Emulator/build/CMakeFiles/rebuild_cache.dir
 C:/Users/Admin/Desktop/Joseph/6502 Emulator/build/CMakeFiles/list_install_components.dir

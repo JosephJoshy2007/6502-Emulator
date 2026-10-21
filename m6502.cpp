@@ -517,6 +517,181 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
 
 
 
+            case INS_AND_IMM:
+            case INS_EOR_IMM:
+            case INS_ORA_IMM: {
+                Byte value = FetchByte(memory, cycles);
+                if (opcode == INS_AND_IMM) {
+                    A &= value;
+                } else if (opcode == INS_EOR_IMM) {
+                    A ^= value;
+                } else if (opcode == INS_ORA_IMM) {
+                    A |= value;
+                }
+                ZERO_AND_NEGATIVE_SET_STATUS(A);
+                break;
+            }
+
+            case INS_AND_ZP:
+            case INS_EOR_ZP:
+            case INS_ORA_ZP: {
+                Byte addr = FetchByte(memory, cycles);
+                Byte value = ReadByte(memory, cycles, addr);
+                if (opcode == INS_AND_ZP) {
+                    A &= value;
+                } else if (opcode == INS_EOR_ZP) {
+                    A ^= value;
+                } else if (opcode == INS_ORA_ZP) {
+                    A |= value;
+                }
+                ZERO_AND_NEGATIVE_SET_STATUS(A);
+                break;
+            }
+
+            case INS_AND_ZP_X:
+            case INS_EOR_ZP_X:
+            case INS_ORA_ZP_X: {
+                Byte addr = FetchByte(memory, cycles);
+                addr += X;
+                cycles--;
+                Byte value = ReadByte(memory, cycles, addr);
+                if (opcode == INS_AND_ZP_X) {
+                    A &= value;
+                } else if (opcode == INS_EOR_ZP_X) {
+                    A ^= value;
+                } else if (opcode == INS_ORA_ZP_X) {
+                    A |= value;
+                }
+                ZERO_AND_NEGATIVE_SET_STATUS(A);
+                break;
+            }
+
+            case INS_AND_ABS:
+            case INS_EOR_ABS:
+            case INS_ORA_ABS: {
+                Byte low = FetchByte(memory, cycles);
+                Byte high = FetchByte(memory, cycles);
+                Word address = (high << 8) | low;
+                Byte value = ReadByte(memory, cycles, address);
+                if (opcode == INS_AND_ABS) {
+                    A &= value;
+                } else if (opcode == INS_EOR_ABS) {
+                    A ^= value;
+                } else if (opcode == INS_ORA_ABS) {
+                    A |= value;
+                }
+                ZERO_AND_NEGATIVE_SET_STATUS(A);
+                break;
+            }
+
+            case INS_AND_ABS_X:
+            case INS_EOR_ABS_X:
+            case INS_ORA_ABS_X: {
+                Byte low = FetchByte(memory, cycles);
+                Byte high = FetchByte(memory, cycles);
+                Word address = (high << 8) | low;
+                address += X;
+                Byte value = ReadByte(memory, cycles, address);
+                if (((address) & 0xFF00) != (high << 8))
+                    cycles--; // Extra cycle for page crossing
+                if (opcode == INS_AND_ABS_X) {
+                    A &= value;
+                } else if (opcode == INS_EOR_ABS_X) {
+                    A ^= value;
+                } else if (opcode == INS_ORA_ABS_X) {
+                    A |= value;
+                }
+                ZERO_AND_NEGATIVE_SET_STATUS(A);
+                break;
+            }
+
+            case INS_AND_ABS_Y:
+            case INS_EOR_ABS_Y:
+            case INS_ORA_ABS_Y: {
+                Byte low = FetchByte(memory, cycles);
+                Byte high = FetchByte(memory, cycles);
+                Word address = (high << 8) | low;
+                address += Y;
+                Byte value = ReadByte(memory, cycles, address);
+                if (((address) & 0xFF00) != (high << 8))
+                    cycles--; // Extra cycle for page crossing
+                if (opcode == INS_AND_ABS_Y) {
+                    A &= value;
+                } else if (opcode == INS_EOR_ABS_Y) {
+                    A ^= value;
+                } else if (opcode == INS_ORA_ABS_Y) {
+                    A |= value;
+                }
+                ZERO_AND_NEGATIVE_SET_STATUS(A);
+                break;
+            }
+
+            case INS_AND_IND_X:
+            case INS_EOR_IND_X:
+            case INS_ORA_IND_X: {
+                Byte zpAddr = FetchByte(memory, cycles);
+                Byte effectiveAddrLow = ReadByte(memory, cycles, (zpAddr + X) & 0xFF);
+                Byte effectiveAddrHigh = ReadByte(memory, cycles, (zpAddr + X + 1) & 0xFF);
+                Word effectiveAddress = (effectiveAddrHigh << 8) | effectiveAddrLow;
+                cycles--;
+
+                Byte value = ReadByte(memory, cycles, effectiveAddress);
+                if (opcode == INS_AND_IND_X) {
+                    A &= value;
+                } else if (opcode == INS_EOR_IND_X) {
+                    A ^= value;
+                } else if (opcode == INS_ORA_IND_X) {
+                    A |= value;
+                }
+                ZERO_AND_NEGATIVE_SET_STATUS(A);
+                break;
+            }
+
+            case INS_AND_IND_Y:
+            case INS_EOR_IND_Y:
+            case INS_ORA_IND_Y: {
+                Byte zpAddr = FetchByte(memory, cycles);
+                Byte effectiveAddrLow = ReadByte(memory, cycles, zpAddr);
+                Byte effectiveAddrHigh = ReadByte(memory, cycles, (zpAddr + 1) & 0xFF);
+                Word effectiveAddress = (effectiveAddrHigh << 8) | effectiveAddrLow;
+                effectiveAddress += Y;
+
+                if ((effectiveAddress & 0xFF00) != (effectiveAddrHigh << 8)) 
+                    cycles--; // Extra cycle for page crossing
+
+                Byte value = ReadByte(memory, cycles, effectiveAddress);
+                if (opcode == INS_AND_IND_Y) {
+                    A &= value;
+                } else if (opcode == INS_EOR_IND_Y) {
+                    A ^= value;
+                } else if (opcode == INS_ORA_IND_Y) {
+                    A |= value;
+                }
+                ZERO_AND_NEGATIVE_SET_STATUS(A);
+                break;
+            }
+
+            case INS_BIT_ZP: {
+                Byte addr = FetchByte(memory, cycles);
+                Byte value = ReadByte(memory, cycles, addr);
+                Z = (A & value) == 0;
+                N = (value & 0b10000000) > 0;
+                V = (value & 0b01000000) > 0;
+                break;
+            }
+
+            case INS_BIT_ABS: {
+                Byte low = FetchByte(memory, cycles);
+                Byte high = FetchByte(memory, cycles);
+                Word address = (high << 8) | low;
+                Byte value = ReadByte(memory, cycles, address);
+                Z = (A & value) == 0;
+                N = (value & 0b10000000) > 0;
+                V = (value & 0b01000000) > 0;
+                break;
+            }
+
+
 
             default:
                 printf("Unknown opcode: 0x%02X at PC: 0x%04X\n", opcode, PC-1);

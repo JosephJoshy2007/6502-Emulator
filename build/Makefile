@@ -239,6 +239,19 @@ depend:
 .PHONY : 6502_stack_tests/fast
 
 #=============================================================================
+# Target rules for targets named 6502_logical_tests
+
+# Build rule for target.
+6502_logical_tests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 6502_logical_tests
+.PHONY : 6502_logical_tests
+
+# fast build rule for target.
+6502_logical_tests/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_logical_tests.dir\build.make CMakeFiles/6502_logical_tests.dir/build
+.PHONY : 6502_logical_tests/fast
+
+#=============================================================================
 # Target rules for targets named gmock
 
 # Build rule for target.
@@ -386,6 +399,30 @@ testing/test_load.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_load_tests.dir\build.make CMakeFiles/6502_load_tests.dir/testing/test_load.cpp.s
 .PHONY : testing/test_load.cpp.s
 
+testing/test_logical.obj: testing/test_logical.cpp.obj
+.PHONY : testing/test_logical.obj
+
+# target to build an object file
+testing/test_logical.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_logical_tests.dir\build.make CMakeFiles/6502_logical_tests.dir/testing/test_logical.cpp.obj
+.PHONY : testing/test_logical.cpp.obj
+
+testing/test_logical.i: testing/test_logical.cpp.i
+.PHONY : testing/test_logical.i
+
+# target to preprocess a source file
+testing/test_logical.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_logical_tests.dir\build.make CMakeFiles/6502_logical_tests.dir/testing/test_logical.cpp.i
+.PHONY : testing/test_logical.cpp.i
+
+testing/test_logical.s: testing/test_logical.cpp.s
+.PHONY : testing/test_logical.s
+
+# target to generate assembly for a file
+testing/test_logical.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\6502_logical_tests.dir\build.make CMakeFiles/6502_logical_tests.dir/testing/test_logical.cpp.s
+.PHONY : testing/test_logical.cpp.s
+
 testing/test_stack.obj: testing/test_stack.cpp.obj
 .PHONY : testing/test_stack.obj
 
@@ -450,6 +487,7 @@ help:
 	@echo ... 6502_jump_tests
 	@echo ... 6502_lib
 	@echo ... 6502_load_tests
+	@echo ... 6502_logical_tests
 	@echo ... 6502_stack_tests
 	@echo ... 6502_store_tests
 	@echo ... gmock
@@ -468,6 +506,9 @@ help:
 	@echo ... testing/test_load.obj
 	@echo ... testing/test_load.i
 	@echo ... testing/test_load.s
+	@echo ... testing/test_logical.obj
+	@echo ... testing/test_logical.i
+	@echo ... testing/test_logical.s
 	@echo ... testing/test_stack.obj
 	@echo ... testing/test_stack.i
 	@echo ... testing/test_stack.s
