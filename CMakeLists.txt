@@ -38,3 +38,6 @@ target_link_libraries(6502_logical_tests PRIVATE 6502_lib GTest::gtest_main)
 
 add_executable(6502_register_tests testing/test_register.cpp)
 target_link_libraries(6502_register_tests PRIVATE 6502_lib GTest::gtest_main)
+
+add_executable(6502_incdec_tests testing/test_incdec.cpp)
+target_link_libraries(6502_incdec_tests PRIVATE 6502_lib GTest::gtest_main)

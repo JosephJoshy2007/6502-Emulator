@@ -788,6 +788,126 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
 
 
 
+            case INS_INC_ZP: {
+                Byte addr = FetchByte(memory, cycles);
+                cycles--;
+                memory[addr]++;
+                cycles -= 2;
+                ZERO_AND_NEGATIVE_SET_STATUS(memory[addr]);
+                break;
+            }
+
+            case INS_INC_ZP_X: {
+                Byte addr = FetchByte(memory, cycles);
+                cycles--;
+                addr += X;
+                cycles--;
+                memory[addr]++;
+                cycles -= 2;
+                ZERO_AND_NEGATIVE_SET_STATUS(memory[addr]);
+                break;
+            }
+
+            case INS_INC_ABS: {
+                Byte low = FetchByte(memory, cycles);
+                Byte high = FetchByte(memory, cycles);
+                cycles--;
+                Word addr = (high << 8) | low;
+                cycles--;
+                memory[addr]++;
+                cycles--;
+                ZERO_AND_NEGATIVE_SET_STATUS(memory[addr]);
+            }
+
+            case INS_INC_ABS_X: {
+                Byte low = FetchByte(memory, cycles);
+                Byte high = FetchByte(memory, cycles);
+                cycles--;
+                Word addr = (high << 8) | low;
+                cycles--;
+                addr += X;
+                cycles--;
+                memory[addr]++;
+                cycles--;
+                ZERO_AND_NEGATIVE_SET_STATUS(memory[addr]);
+            }
+
+            case INS_INX: {
+                X++;
+                cycles--;
+                ZERO_AND_NEGATIVE_SET_STATUS(X);
+                break;
+            }
+
+            case INS_INY: {
+                Y++;
+                cycles--;
+                ZERO_AND_NEGATIVE_SET_STATUS(Y);
+                break;
+            }
+
+            case INS_DEC_ZP: {
+                Byte addr = FetchByte(memory, cycles);
+                cycles--;
+                memory[addr]--;
+                cycles -= 2;
+                ZERO_AND_NEGATIVE_SET_STATUS(memory[addr]);
+                break;
+            }
+
+            case INS_DEC_ZP_X: {
+                Byte addr = FetchByte(memory, cycles);
+                cycles--;
+                addr += X;
+                cycles--;
+                memory[addr]--;
+                cycles -= 2;
+                ZERO_AND_NEGATIVE_SET_STATUS(memory[addr]);
+                break;
+            }
+
+            case INS_DEC_ABS: {
+                Byte low = FetchByte(memory, cycles);
+                Byte high = FetchByte(memory, cycles);
+                cycles--;
+                Word addr = (high << 8) | low;
+                cycles--;
+                memory[addr]--;
+                cycles--;
+                ZERO_AND_NEGATIVE_SET_STATUS(memory[addr]);
+                break;
+            }
+
+            case INS_DEC_ABS_X: {
+                Byte low = FetchByte(memory, cycles);
+                Byte high = FetchByte(memory, cycles);
+                cycles--;
+                Word addr = (high << 8) | low;
+                cycles--;
+                addr += X;
+                cycles--;
+                memory[addr]--;
+                cycles--;
+                ZERO_AND_NEGATIVE_SET_STATUS(memory[addr]);
+                break;
+            }
+
+            case INS_DEX: {
+                X--;
+                cycles--;
+                ZERO_AND_NEGATIVE_SET_STATUS(X);
+                break;
+            }
+
+            case INS_DEY: {
+                Y--;
+                cycles--;
+                ZERO_AND_NEGATIVE_SET_STATUS(Y);
+                break;
+            }
+
+
+
             default:
                 printf("Unknown opcode: 0x%02X at PC: 0x%04X\n", opcode, PC-1);
                 break;

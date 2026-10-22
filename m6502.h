@@ -177,7 +177,22 @@ struct CPU{
         INS_TAX = 0xAA,
         INS_TAY = 0xA8,
         INS_TXA = 0x8A,
-        INS_TYA = 0x98;
+        INS_TYA = 0x98,
+
+        //INC and DEC
+        INS_INC_ZP = 0xE6,
+        INS_INC_ZP_X = 0xF6,
+        INS_INC_ABS = 0xEE,
+        INS_INC_ABS_X = 0xFE,
+        INS_INX = 0xE8,
+        INS_INY = 0xC8,
+        INS_DEC_ZP = 0xC6,
+        INS_DEC_ZP_X = 0xD6,
+        INS_DEC_ABS = 0xCE,
+        INS_DEC_ABS_X = 0xDE,
+        INS_DEX = 0xCA,
+        INS_DEY = 0x88;
+        
 
     s32 Execute(Memory& memory, s32 cycles);
     
