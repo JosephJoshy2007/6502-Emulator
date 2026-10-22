@@ -1,6 +1,10 @@
 #include "m6502.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <cstdint>
 
 using Byte = unsigned char;
 using Word = unsigned short;
@@ -31,6 +35,65 @@ void CPU::Reset(Memory& memory) {
 
     memory.Initialize();
 }
+
+    
+void CPU::UseResetVector(Memory& memory){
+
+    PC = static_cast<Word>(memory[0xFFFC]) | (static_cast<Word>(memory[0xFFFD]) << 8);
+    
+}
+
+bool CPU::LoadProgram(const std::string& filepath, Memory& mem, CPU& cpu) {
+    // 1. Open the binary file at the end to determine its size
+    std::ifstream file(filepath, std::ios::binary | std::ios::ate);
+    if (!file.is_open()) {
+        std::cerr << "Error: Could not open file: " << filepath << "\n";
+        return false;
+    }
+
+    std::streamsize fileSize = file.tellg();
+    file.seekg(0, std::ios::beg);
+
+    // File must at least contain the 2-byte vector
+    if (fileSize < 2) {
+        std::cerr << "Error: File is too small (needs at least 2 bytes for the vector).\n";
+        return false;
+    }
+
+    // 2. Read the entire file into a buffer
+    std::vector<uint8_t> buffer(fileSize);
+    if (!file.read(reinterpret_cast<char*>(buffer.data()), fileSize)) {
+        std::cerr << "Error: Failed to read binary data from file.\n";
+        return false;
+    }
+
+    // 3. Put the first 2 bytes into the reset vector ($FFFC and $FFFD)
+    mem[0xFFFC] = buffer[0]; // Low byte
+    mem[0xFFFD] = buffer[1]; // High byte
+
+    // 4. Resolve the target start address from the vector
+    uint16_t startAddress = static_cast<uint16_t>(buffer[0]) | 
+                           (static_cast<uint16_t>(buffer[1]) << 8);
+
+    // 5. Copy the remaining bytes starting from the target address
+    for (size_t i = 2; i < buffer.size(); ++i) {
+        // Prevent writing beyond 64KB boundary
+        uint32_t currentAddress = startAddress + (i - 2);
+        if (currentAddress > 0xFFFF) {
+            std::cerr << "Warning: Program exceeds 64KB addressable memory space.\n";
+            break;
+        }
+        mem[currentAddress] = buffer[i];
+    }
+
+    // 6. Point the CPU to the start address via the reset vector
+    cpu.UseResetVector(mem);
+
+    std::cout << "Successfully loaded " << (fileSize - 2) 
+              << " bytes to 0x" << std::hex << startAddress << std::dec << "\n";
+    return true;
+}
+
 
 Byte CPU::FetchByte(Memory& memory, s32& cycles) {
     Byte data = memory[PC];
@@ -164,6 +227,8 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
     const s32 initial = cycles;
 
     while (cycles > 0) {
+
+        printf("PC: %04X, A: %02X, X: %02X, Y: %02X, SP: %02X\n", PC, A, X, Y, SP);
         Byte opcode = FetchByte(memory,cycles);
         
         switch (opcode) {
@@ -693,12 +758,43 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
 
 
 
+            case INS_TAX: {
+                X = A;
+                cycles--;
+                ZERO_AND_NEGATIVE_SET_STATUS(X);
+                break;
+            }
+
+            case INS_TAY: {
+                Y = A;
+                cycles--;
+                ZERO_AND_NEGATIVE_SET_STATUS(Y);
+                break;
+            }
+
+            case INS_TXA: {
+                A = X;
+                cycles--;
+                ZERO_AND_NEGATIVE_SET_STATUS(A);
+                break;
+            }
+
+            case INS_TYA: {
+                A = Y;
+                cycles--;
+                ZERO_AND_NEGATIVE_SET_STATUS(A);
+                break;
+            }
+
+
+
             default:
                 printf("Unknown opcode: 0x%02X at PC: 0x%04X\n", opcode, PC-1);
                 break;
         }
         
     }
+    printf("PC: %04X, A: %02X, X: %02X, Y: %02X, SP: %02X\n", PC, A, X, Y, SP);
     const s32 cyclesUsed = initial - cycles;
     return cyclesUsed;
 }

@@ -1,5 +1,11 @@
 #pragma once
 
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <cstdint>
+
+
 using Byte = unsigned char;
 using Word = unsigned short;
 using u32 = unsigned int;
@@ -35,6 +41,10 @@ struct CPU{
     Byte N : 1;
 
     void Reset(Memory& memory);
+
+    void UseResetVector(Memory& memory);
+
+    bool LoadProgram(const std::string& filepath, Memory& mem, CPU& cpu);
 
     Byte GetStatusRegister() const;
 
@@ -161,7 +171,13 @@ struct CPU{
         
         //BIT
         INS_BIT_ZP = 0x24,
-        INS_BIT_ABS = 0x2C;
+        INS_BIT_ABS = 0x2C,
+        
+        //Register
+        INS_TAX = 0xAA,
+        INS_TAY = 0xA8,
+        INS_TXA = 0x8A,
+        INS_TYA = 0x98;
 
     s32 Execute(Memory& memory, s32 cycles);
     
