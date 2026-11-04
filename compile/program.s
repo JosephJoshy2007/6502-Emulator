@@ -1,5 +1,14 @@
-* = $1000
+* = $8000
 
-lda #$FF
-sta $90
-ldx #$90
+; Load at $8000
+
+loop
+LDA #$00
+bne noloop
+beq loop
+
+noloop
+sta $01
+inc $01
+lda $01
+jmp noloop

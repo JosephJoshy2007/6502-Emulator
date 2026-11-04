@@ -7,6 +7,7 @@
 #include <cstdint>
 
 using Byte = unsigned char;
+using SByte = char;
 using Word = unsigned short;
 using u32 = unsigned int;
 using s32 = signed int;
@@ -219,6 +220,28 @@ void CPU::STORE_REGISTER_ABSOLUTE(Memory& memory, s32& cycles, Byte& Register) {
     Byte high = FetchByte(memory, cycles);
     Word address = (high << 8) | low;
     WriteByte(memory, cycles, address, Register);
+}
+
+void CPU::BRANCH_IF_FLAG_SET(Memory& memory, s32& cycles, Byte& Flag) {
+    Byte offset = FetchByte(memory, cycles);
+    if (Flag){
+        Word PCcopy = PC;
+        PC += static_cast<SByte>(offset);
+        cycles--;
+        if ((PC & 0xFF00) != (PCcopy & 0xFF00))
+            cycles--;
+    }
+}
+
+void CPU::BRANCH_IF_FLAG_NOT_SET(Memory& memory, s32& cycles, Byte& Flag){
+    Byte offset = FetchByte(memory, cycles);
+    if (!Flag){
+        Word PCcopy = PC;
+        PC += static_cast<SByte>(offset);
+        cycles--;
+        if ((PC & 0xFF00) != (PCcopy & 0xFF00))
+            cycles--;
+    }
 }
 
 
@@ -903,6 +926,48 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
                 Y--;
                 cycles--;
                 ZERO_AND_NEGATIVE_SET_STATUS(Y);
+                break;
+            }
+
+
+
+            case INS_BEQ: {
+                BRANCH_IF_FLAG_SET(memory, cycles, Z);
+                break;
+            }
+
+            case INS_BCC: {
+                BRANCH_IF_FLAG_NOT_SET(memory, cycles, C);
+                break;
+            }
+
+            case INS_BCS: {
+                BRANCH_IF_FLAG_SET(memory, cycles, C);
+                break;
+            }
+
+            case INS_BMI: {
+                BRANCH_IF_FLAG_SET(memory, cycles, N);
+                break;
+            }
+
+            case INS_BNE: {
+                BRANCH_IF_FLAG_NOT_SET(memory, cycles, Z);
+                break;
+            }
+
+            case INS_BPL: {
+                BRANCH_IF_FLAG_NOT_SET(memory, cycles, N);
+                break;
+            }
+
+            case INS_BVC: {
+                BRANCH_IF_FLAG_NOT_SET(memory, cycles, V);
+                break;
+            }
+
+            case INS_BVS: {
+                BRANCH_IF_FLAG_SET(memory, cycles, V);
                 break;
             }
 

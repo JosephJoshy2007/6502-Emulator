@@ -40,7 +40,7 @@ int main() {
     }
     
     cpu.UseResetVector(mem);
-    cpu.Execute(mem, 6);
+    cpu.Execute(mem, 500);
 
     return 0;
 

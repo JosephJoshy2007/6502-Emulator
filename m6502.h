@@ -7,6 +7,7 @@
 
 
 using Byte = unsigned char;
+using SByte = char;
 using Word = unsigned short;
 using u32 = unsigned int;
 using s32 = signed int;
@@ -31,14 +32,7 @@ struct CPU{
 
     Byte A,X,Y;
 
-    Byte C : 1;
-    Byte Z : 1;
-    Byte I : 1;
-    Byte D : 1;
-    Byte B : 1;
-    Byte U : 1;
-    Byte V : 1;
-    Byte N : 1;
+    Byte C,Z,I,D,B,U,V,N;
 
     void Reset(Memory& memory);
 
@@ -77,6 +71,10 @@ struct CPU{
     void STORE_REGISTER_ZERO_PAGE_WITH_Y_OFFSET(Memory& memory, s32& cycles, Byte& Register);
 
     void STORE_REGISTER_ABSOLUTE(Memory& memory, s32& cycles, Byte& Register);
+
+    void BRANCH_IF_FLAG_SET(Memory& memory, s32& cycles, Byte& Flag);
+
+    void BRANCH_IF_FLAG_NOT_SET(Memory& memory, s32& cycles, Byte& Flag);
 
     static constexpr Byte 
 
@@ -191,7 +189,17 @@ struct CPU{
         INS_DEC_ABS = 0xCE,
         INS_DEC_ABS_X = 0xDE,
         INS_DEX = 0xCA,
-        INS_DEY = 0x88;
+        INS_DEY = 0x88,
+        
+        //Branch
+        INS_BEQ = 0xF0,
+        INS_BCC = 0x90,
+        INS_BCS = 0xB0,
+        INS_BMI = 0x30,
+        INS_BNE = 0xD0,
+        INS_BPL = 0x10,
+        INS_BVC = 0x50,
+        INS_BVS = 0x70;
         
 
     s32 Execute(Memory& memory, s32 cycles);
