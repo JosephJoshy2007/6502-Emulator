@@ -1,5 +1,4 @@
 #include <gtest/gtest.h>
-#include <functional>
 #include "m6502.h"
 
 class M6502BranchTest : public ::testing::Test {

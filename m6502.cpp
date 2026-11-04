@@ -258,7 +258,6 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
 
             case INS_NOP:{ // NOP
                 cycles--;
-                cycles--;
                 break;
             }
 
@@ -968,6 +967,48 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
 
             case INS_BVS: {
                 BRANCH_IF_FLAG_SET(memory, cycles, V);
+                break;
+            }
+
+            case INS_CLC: {
+                C = 0;
+                cycles--;
+                break;
+            }
+
+            case INS_CLI: {
+                I = 0;
+                cycles--;
+                break;
+            }
+
+            case INS_CLV: {
+                V = 0;
+                cycles--;
+                break;
+            }
+
+            case INS_SEC: {
+                C = 1;
+                cycles--;
+                break;
+            }
+
+            case INS_SED: {
+                D = 1;
+                cycles--;
+                break;
+            }
+
+            case INS_SEI: {
+                I = 1;
+                cycles--;
+                break;
+            }
+
+            case INS_CLD: {
+                D = 0;
+                cycles--;
                 break;
             }
 

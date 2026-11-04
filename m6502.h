@@ -199,8 +199,16 @@ struct CPU{
         INS_BNE = 0xD0,
         INS_BPL = 0x10,
         INS_BVC = 0x50,
-        INS_BVS = 0x70;
-        
+        INS_BVS = 0x70,
+
+        //Clear / Set
+        INS_CLC = 0x18,
+        INS_CLD = 0xD8,
+        INS_CLI = 0x58,
+        INS_CLV = 0xB8,
+        INS_SED = 0xF8,
+        INS_SEI = 0x78,
+        INS_SEC = 0x38;
 
     s32 Execute(Memory& memory, s32 cycles);
     
