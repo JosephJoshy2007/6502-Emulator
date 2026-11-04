@@ -77,7 +77,15 @@ struct CPU{
 
     void BRANCH_IF_FLAG_NOT_SET(Memory& memory, s32& cycles, Byte& Flag);
 
-    void ExecuteADC(Byte value);
+    void ADDWITHCARRY(Byte value);
+
+    void COMPARE(Byte value, Byte& Register);
+
+    void COMPARE_IMMEDIATE(Memory& memory, s32& cycles, Byte& Register);
+
+    void COMPARE_ZERO_PAGE(Memory& memory, s32& cycles, Byte& Register);
+
+    void COMPARE_ABSOLUTE(Memory& memory, s32& cycles, Byte& Register);
 
     static constexpr Byte 
 
@@ -221,7 +229,23 @@ struct CPU{
         INS_ADC_ABS_X = 0x7D,
         INS_ADC_ABS_Y = 0x79,
         INS_ADC_IND_X = 0x61,
-        INS_ADC_IND_Y = 0x71;
+        INS_ADC_IND_Y = 0x71,
+        
+        //Compare
+        INS_CMP_IMM = 0xC9,
+        INS_CMP_ZP = 0xC5,
+        INS_CMP_ZP_X = 0xD5,
+        INS_CMP_ABS = 0xCD,
+        INS_CMP_ABS_X = 0xDD,
+        INS_CMP_ABS_Y = 0xD9,
+        INS_CMP_IND_X = 0xC1,
+        INS_CMP_IND_Y = 0xD1,
+        INS_CPX_IMM = 0xE0,
+        INS_CPY_IMM = 0xC0,
+        INS_CPX_ZP = 0xE4,
+        INS_CPY_ZP = 0xC4,
+        INS_CPX_ABS = 0xEC,
+        INS_CPY_ABS = 0xCC;
 
     s32 Execute(Memory& memory, s32 cycles);
     

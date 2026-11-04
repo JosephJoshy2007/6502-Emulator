@@ -244,7 +244,7 @@ void CPU::BRANCH_IF_FLAG_NOT_SET(Memory& memory, s32& cycles, Byte& Flag){
     }
 }
 
-void CPU::ExecuteADC(Byte value) {
+void CPU::ADDWITHCARRY(Byte value) {
     u16 sum = static_cast<u16>(A) + static_cast<u16>(value) + static_cast<u16>(C);
     C = (sum > 0xFF);
     V = (~(A ^ value) & (A ^ sum) & 0x80) != 0;
@@ -252,6 +252,35 @@ void CPU::ExecuteADC(Byte value) {
     ZERO_AND_NEGATIVE_SET_STATUS(A);
 }
 
+void CPU::COMPARE(Byte value, Byte& Register) {
+    Byte result = Register - value;
+
+    N = (result & 0x80) != 0;
+    Z = (Register==value);
+    C = (Register>=value);
+}
+
+void CPU::COMPARE_IMMEDIATE(Memory& memory, s32& cycles, Byte& Register) {
+
+    Byte value = FetchByte(memory, cycles);
+    COMPARE(value, Register);   
+}
+
+void CPU::COMPARE_ZERO_PAGE(Memory& memory, s32& cycles, Byte& Register) {
+
+    Byte address = FetchByte(memory, cycles);
+    Byte value = ReadByte(memory, cycles, address);
+    COMPARE(value, Register);   
+}
+
+void CPU::COMPARE_ABSOLUTE(Memory& memory, s32& cycles, Byte& Register) {
+
+    Byte low = FetchByte(memory, cycles);
+    Byte high = FetchByte(memory, cycles);
+    Word address = (high << 8) | low;
+    Byte value = ReadByte(memory, cycles, address);
+    COMPARE(value, Register);   
+}
 
 s32 CPU::Execute(Memory& memory, s32 cycles) {
 
@@ -1027,7 +1056,7 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
 
             case INS_ADC_IMM: {
                 Byte value = FetchByte(memory, cycles);
-                ExecuteADC(value);
+                ADDWITHCARRY(value);
 
                 break;
             }
@@ -1036,7 +1065,7 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
                 Byte address = FetchByte(memory, cycles);
                 Byte value = ReadByte(memory, cycles, address);
 
-                ExecuteADC(value);
+                ADDWITHCARRY(value);
 
                 break;
             }
@@ -1047,7 +1076,7 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
                 cycles--;
                 Byte value = ReadByte(memory, cycles, address);
 
-                ExecuteADC(value);
+                ADDWITHCARRY(value);
 
                 break;
             }
@@ -1058,7 +1087,7 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
                 Word address = (high << 8) | low;
                 Byte value = ReadByte(memory, cycles, address);
 
-                ExecuteADC(value);
+                ADDWITHCARRY(value);
 
                 break;
             }
@@ -1072,7 +1101,7 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
                 if (((address+X) & 0xFF00) != (high << 8)) 
                     cycles--; // Extra cycle for page crossing
 
-                ExecuteADC(value);
+                ADDWITHCARRY(value);
 
                 break;
             }
@@ -1086,7 +1115,7 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
                 if (((address+Y) & 0xFF00) != (high << 8)) 
                     cycles--; // Extra cycle for page crossing
 
-                ExecuteADC(value);
+                ADDWITHCARRY(value);
 
                 break;
             }
@@ -1100,7 +1129,7 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
 
                 Byte value = ReadByte(memory, cycles, effectiveAddress);
 
-                ExecuteADC(value);
+                ADDWITHCARRY(value);
 
                 break;
             }
@@ -1117,10 +1146,132 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
 
                 Byte value = ReadByte(memory, cycles, effectiveAddress);
 
-                ExecuteADC(value);
+                ADDWITHCARRY(value);
 
                 break;
             }
+
+
+
+            case INS_CMP_IMM: {
+                COMPARE_IMMEDIATE(memory, cycles, A);
+
+                break;
+            }
+
+            case INS_CMP_ZP: {
+
+                COMPARE_ZERO_PAGE(memory, cycles, A);
+
+                break;
+            }
+
+            case INS_CMP_ZP_X: {
+                Byte address = FetchByte(memory, cycles);
+                address += X;
+                cycles--;
+                Byte value = ReadByte(memory, cycles, address);
+
+                COMPARE(value, A);
+
+                break;
+            }
+
+            case INS_CMP_ABS: {
+                COMPARE_ABSOLUTE(memory, cycles, A);
+
+                break;
+            }
+
+            case INS_CMP_ABS_X: {
+                Byte low = FetchByte(memory, cycles);
+                Byte high = FetchByte(memory, cycles);
+                Word address = (high << 8) | low;
+                Byte value = ReadByte(memory, cycles, address+X);
+
+                if (((address+X) & 0xFF00) != (high << 8)) 
+                    cycles--; // Extra cycle for page crossing
+
+                COMPARE(value, A);
+
+                break;
+            }
+
+            case INS_CMP_ABS_Y: {
+                Byte low = FetchByte(memory, cycles);
+                Byte high = FetchByte(memory, cycles);
+                Word address = (high << 8) | low;
+                Byte value = ReadByte(memory, cycles, address+Y);
+
+                if (((address+Y) & 0xFF00) != (high << 8)) 
+                    cycles--; // Extra cycle for page crossing
+
+                COMPARE(value, A);
+
+                break;
+            }
+
+            case INS_CMP_IND_X: {
+                Byte zpAddr = FetchByte(memory, cycles);
+                Byte effectiveAddrLow = ReadByte(memory, cycles, (zpAddr + X) & 0xFF);
+                Byte effectiveAddrHigh = ReadByte(memory, cycles, (zpAddr + X + 1) & 0xFF);
+                Word effectiveAddress = (effectiveAddrHigh << 8) | effectiveAddrLow;
+                cycles--;
+
+                Byte value = ReadByte(memory, cycles, effectiveAddress);
+
+                COMPARE(value, A);
+
+                break;
+            }
+
+            case INS_CMP_IND_Y: {
+                Byte zpAddr = FetchByte(memory, cycles);
+                Byte effectiveAddrLow = ReadByte(memory, cycles, zpAddr);
+                Byte effectiveAddrHigh = ReadByte(memory, cycles, (zpAddr + 1) & 0xFF);
+                Word effectiveAddress = (effectiveAddrHigh << 8) | effectiveAddrLow;
+                effectiveAddress += Y;
+
+                if ((effectiveAddress & 0xFF00) != (effectiveAddrHigh << 8)) 
+                    cycles--; // Extra cycle for page crossing
+
+                Byte value = ReadByte(memory, cycles, effectiveAddress);
+
+                COMPARE(value, A);
+
+                break;
+            }
+
+            case INS_CPX_IMM: {
+                COMPARE_IMMEDIATE(memory, cycles, X);
+                break;
+            }
+
+            case INS_CPY_IMM: {
+                COMPARE_IMMEDIATE(memory, cycles, Y);
+                break;
+            }
+
+            case INS_CPX_ZP: {
+                COMPARE_ZERO_PAGE(memory, cycles, X);
+                break;
+            }
+
+            case INS_CPY_ZP: {
+                COMPARE_ZERO_PAGE(memory, cycles, Y);
+                break;
+            }
+
+            case INS_CPX_ABS: {
+                COMPARE_ABSOLUTE(memory, cycles, X);
+                break;
+            }
+
+            case INS_CPY_ABS: {
+                COMPARE_ABSOLUTE(memory, cycles, Y);
+                break;
+            }
+
 
 
 
