@@ -11,6 +11,7 @@ using SByte = char;
 using Word = unsigned short;
 using u32 = unsigned int;
 using s32 = signed int;
+using u16 = unsigned short;
 
 struct Memory {
 
@@ -75,6 +76,8 @@ struct CPU{
     void BRANCH_IF_FLAG_SET(Memory& memory, s32& cycles, Byte& Flag);
 
     void BRANCH_IF_FLAG_NOT_SET(Memory& memory, s32& cycles, Byte& Flag);
+
+    void ExecuteADC(Byte value);
 
     static constexpr Byte 
 
@@ -208,7 +211,17 @@ struct CPU{
         INS_CLV = 0xB8,
         INS_SED = 0xF8,
         INS_SEI = 0x78,
-        INS_SEC = 0x38;
+        INS_SEC = 0x38,
+        
+        //Add 
+        INS_ADC_IMM = 0x69,
+        INS_ADC_ZP = 0x65,
+        INS_ADC_ZP_X = 0x75,
+        INS_ADC_ABS = 0x6D,
+        INS_ADC_ABS_X = 0x7D,
+        INS_ADC_ABS_Y = 0x79,
+        INS_ADC_IND_X = 0x61,
+        INS_ADC_IND_Y = 0x71;
 
     s32 Execute(Memory& memory, s32 cycles);
     

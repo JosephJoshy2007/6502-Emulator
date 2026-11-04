@@ -47,3 +47,6 @@ target_link_libraries(6502_branch_tests PRIVATE 6502_lib GTest::gtest_main)
 
 add_executable(6502_set_clear_tests testing/test_set_clear.cpp)
 target_link_libraries(6502_set_clear_tests PRIVATE 6502_lib GTest::gtest_main)
+
+add_executable(6502_addcarry_tests testing/test_addcarry.cpp)
+target_link_libraries(6502_addcarry_tests PRIVATE 6502_lib GTest::gtest_main)
