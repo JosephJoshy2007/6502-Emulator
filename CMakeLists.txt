@@ -53,3 +53,6 @@ target_link_libraries(6502_addcarry_tests PRIVATE 6502_lib GTest::gtest_main)
 
 add_executable(6502_compare_tests testing/test_compare.cpp)
 target_link_libraries(6502_compare_tests PRIVATE 6502_lib GTest::gtest_main)
+
+add_executable(6502_subtractcarry_tests testing/test_subtractcarry.cpp)
+target_link_libraries(6502_subtractcarry_tests PRIVATE 6502_lib GTest::gtest_main)

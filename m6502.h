@@ -7,7 +7,7 @@
 
 
 using Byte = unsigned char;
-using SByte = char;
+using SByte = signed char;
 using Word = unsigned short;
 using u32 = unsigned int;
 using s32 = signed int;
@@ -36,6 +36,8 @@ struct CPU{
     Byte C,Z,I,D,B,U,V,N;
 
     void Reset(Memory& memory);
+
+    void PrintState() const;
 
     void UseResetVector(Memory& memory);
 
@@ -230,7 +232,17 @@ struct CPU{
         INS_ADC_ABS_Y = 0x79,
         INS_ADC_IND_X = 0x61,
         INS_ADC_IND_Y = 0x71,
-        
+
+        //Subtract
+        INS_SBC_IMM = 0xE9,
+        INS_SBC_ZP = 0xE5,
+        INS_SBC_ZP_X = 0xF5,
+        INS_SBC_ABS = 0xED,
+        INS_SBC_ABS_X = 0xFD,
+        INS_SBC_ABS_Y = 0xF9,
+        INS_SBC_IND_X = 0xE1,
+        INS_SBC_IND_Y = 0xF1,
+
         //Compare
         INS_CMP_IMM = 0xC9,
         INS_CMP_ZP = 0xC5,
@@ -245,7 +257,33 @@ struct CPU{
         INS_CPX_ZP = 0xE4,
         INS_CPY_ZP = 0xC4,
         INS_CPX_ABS = 0xEC,
-        INS_CPY_ABS = 0xCC;
+        INS_CPY_ABS = 0xCC,
+        
+        //Shifts
+        INS_ASL_A = 0x0A,
+        INS_ASL_ZP = 0x06,
+        INS_ASL_ZP_X = 0x16,
+        INS_ASL_ABS = 0x0E,
+        INS_ASL_ABS_X = 0x1E,
+        
+        INS_LSR_A = 0x4A,
+        INS_LSR_ZP = 0x46,
+        INS_LSR_ZP_X = 0x56,
+        INS_LSR_ABS = 0x4E,
+        INS_LSR_ABS_X = 0x5E,
+        
+        //Rotate
+        INS_ROL_A = 0x2A,
+        INS_ROL_ZP = 0x26,
+        INS_ROL_ZP_X = 0x36,
+        INS_ROL_ABS = 0x2E,
+        INS_ROL_ABS_X = 0x3E,
+        
+        INS_ROR_A = 0x6A,
+        INS_ROR_ZP = 0x66,
+        INS_ROR_ZP_X = 0x76,
+        INS_ROR_ABS = 0x6E,
+        INS_ROR_ABS_X = 0x7E;
 
     s32 Execute(Memory& memory, s32 cycles);
     

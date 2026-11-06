@@ -6,12 +6,6 @@
 #include <vector>
 #include <cstdint>
 
-using Byte = unsigned char;
-using SByte = char;
-using Word = unsigned short;
-using u32 = unsigned int;
-using s32 = signed int;
-
 
 void Memory::Initialize() {
     for (u32 i = 0; i < MAX_SIZE; i++) {
@@ -32,9 +26,27 @@ void CPU::Reset(Memory& memory) {
     PC = 0xFFFC;
     SP = 0xFF;
     A = X = Y = 0;
-    C = Z = I = D = B = V = N = 0;
+    I = 1;
+    C = Z = D = B = V = N = 0;
 
     memory.Initialize();
+}
+
+void CPU::PrintState() const {
+    Byte p = GetStatusRegister();
+    printf("\n======================= CPU State =======================\n");
+    printf("  PC: 0x%04X   SP: 0x%02X (Stack: 0x%04X)\n", PC, SP, 0x0100 | SP);
+    printf("  A:  0x%02X     X:  0x%02X     Y:  0x%02X\n", A, X, Y);
+    printf("  Flags [NV-BDIZC]: %c%c-%c%c%c%c%c (P: 0x%02X)\n",
+           N ? 'N' : '.',
+           V ? 'V' : '.',
+           (p & 0x10) ? 'B' : '.',
+           D ? 'D' : '.',
+           I ? 'I' : '.',
+           Z ? 'Z' : '.',
+           C ? 'C' : '.',
+           p);
+    printf("=========================================================\n\n");
 }
 
     
@@ -87,9 +99,6 @@ bool CPU::LoadProgram(const std::string& filepath, Memory& mem, CPU& cpu) {
         mem[currentAddress] = buffer[i];
     }
 
-    // 6. Point the CPU to the start address via the reset vector
-    cpu.UseResetVector(mem);
-
     std::cout << "Successfully loaded " << (fileSize - 2) 
               << " bytes to 0x" << std::hex << startAddress << std::dec << "\n";
     return true;
@@ -136,7 +145,7 @@ void CPU::WriteByte(Memory& memory, s32& cycles, Word address, Byte value) {
 
 void CPU::WriteWord(Memory& memory, s32& cycles, Word address, Word value) {
     memory[address] = value & 0xFF; // Low byte
-    memory[address + 1] = (value >> 8) & 0xFF; // High byte
+    memory[static_cast<Word>(address + 1)] = (value >> 8) & 0xFF; // High byte
     cycles -= 2;
 }
 
@@ -288,7 +297,6 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
 
     while (cycles > 0) {
 
-        printf("PC: %04X, A: %02X, X: %02X, Y: %02X, SP: %02X\n", PC, A, X, Y, SP);
         Byte opcode = FetchByte(memory,cycles);
         
         switch (opcode) {
@@ -624,7 +632,7 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
             }
 
             case INS_PHP: {
-                Byte status = GetStatusRegister();
+                Byte status = GetStatusRegister() | 0x30;
                 WriteByte(memory, cycles, SP | 0x100, status);
                 SP--;
                 cycles--;
@@ -876,6 +884,7 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
                 memory[addr]++;
                 cycles--;
                 ZERO_AND_NEGATIVE_SET_STATUS(memory[addr]);
+                break;
             }
 
             case INS_INC_ABS_X: {
@@ -889,6 +898,7 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
                 memory[addr]++;
                 cycles--;
                 ZERO_AND_NEGATIVE_SET_STATUS(memory[addr]);
+                break;
             }
 
             case INS_INX: {
@@ -1153,6 +1163,107 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
 
 
 
+            case INS_SBC_IMM: {
+                Byte value = FetchByte(memory, cycles);
+                ADDWITHCARRY(~value);
+
+                break;
+            }
+
+            case INS_SBC_ZP: {
+                Byte address = FetchByte(memory, cycles);
+                Byte value = ReadByte(memory, cycles, address);
+
+                ADDWITHCARRY(~value);
+
+                break;
+            }
+
+            case INS_SBC_ZP_X: {
+                Byte address = FetchByte(memory, cycles);
+                address += X;
+                cycles--;
+                Byte value = ReadByte(memory, cycles, address);
+
+                ADDWITHCARRY(~value);
+
+                break;
+            }
+
+            case INS_SBC_ABS: {
+                Byte low = FetchByte(memory, cycles);
+                Byte high = FetchByte(memory, cycles);
+                Word address = (high << 8) | low;
+                Byte value = ReadByte(memory, cycles, address);
+
+                ADDWITHCARRY(~value);
+
+                break;
+            }
+
+            case INS_SBC_ABS_X: {
+                Byte low = FetchByte(memory, cycles);
+                Byte high = FetchByte(memory, cycles);
+                Word address = (high << 8) | low;
+                Byte value = ReadByte(memory, cycles, address+X);
+
+                if (((address+X) & 0xFF00) != (high << 8)) 
+                    cycles--; // Extra cycle for page crossing
+
+                ADDWITHCARRY(~value);
+
+                break;
+            }
+
+            case INS_SBC_ABS_Y: {
+                Byte low = FetchByte(memory, cycles);
+                Byte high = FetchByte(memory, cycles);
+                Word address = (high << 8) | low;
+                Byte value = ReadByte(memory, cycles, address+Y);
+
+                if (((address+Y) & 0xFF00) != (high << 8)) 
+                    cycles--; // Extra cycle for page crossing
+
+                ADDWITHCARRY(~value);
+
+                break;
+            }
+
+            case INS_SBC_IND_X: {
+                Byte zpAddr = FetchByte(memory, cycles);
+                Byte effectiveAddrLow = ReadByte(memory, cycles, (zpAddr + X) & 0xFF);
+                Byte effectiveAddrHigh = ReadByte(memory, cycles, (zpAddr + X + 1) & 0xFF);
+                Word effectiveAddress = (effectiveAddrHigh << 8) | effectiveAddrLow;
+                cycles--;
+
+                Byte value = ReadByte(memory, cycles, effectiveAddress);
+
+                ADDWITHCARRY(~value);
+
+                break;
+            }
+
+            case INS_SBC_IND_Y: {
+                Byte zpAddr = FetchByte(memory, cycles);
+                Byte effectiveAddrLow = ReadByte(memory, cycles, zpAddr);
+                Byte effectiveAddrHigh = ReadByte(memory, cycles, (zpAddr + 1) & 0xFF);
+                Word effectiveAddress = (effectiveAddrHigh << 8) | effectiveAddrLow;
+                effectiveAddress += Y;
+
+                if ((effectiveAddress & 0xFF00) != (effectiveAddrHigh << 8)) 
+                    cycles--; // Extra cycle for page crossing
+
+                Byte value = ReadByte(memory, cycles, effectiveAddress);
+
+                ADDWITHCARRY(~value);
+
+                break;
+            }
+
+
+
+
+
             case INS_CMP_IMM: {
                 COMPARE_IMMEDIATE(memory, cycles, A);
 
@@ -1281,7 +1392,7 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
         }
         
     }
-    printf("PC: %04X, A: %02X, X: %02X, Y: %02X, SP: %02X\n", PC, A, X, Y, SP);
+    PrintState();
     const s32 cyclesUsed = initial - cycles;
     return cyclesUsed;
 }
