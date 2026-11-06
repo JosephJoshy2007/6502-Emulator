@@ -93,6 +93,10 @@ struct CPU{
 
     Byte LOGICAL_SHIFT_RIGHT(Byte value, s32& cycles);
 
+    Byte ROTATE_LEFT(Byte value, s32& cycles);
+
+    Byte ROTATE_RIGHT(Byte value, s32& cycles);
+
     static constexpr Byte 
 
         //LDA
@@ -287,7 +291,11 @@ struct CPU{
         INS_ROR_ZP = 0x66,
         INS_ROR_ZP_X = 0x76,
         INS_ROR_ABS = 0x6E,
-        INS_ROR_ABS_X = 0x7E;
+        INS_ROR_ABS_X = 0x7E,
+        
+        
+        INS_BRK = 0x00,
+        INS_RTI = 0x40;
 
     s32 Execute(Memory& memory, s32 cycles);
     

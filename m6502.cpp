@@ -311,6 +311,24 @@ Byte CPU::LOGICAL_SHIFT_RIGHT(Byte value, s32& cycles) {
     return result;
 }
 
+Byte CPU::ROTATE_LEFT(Byte value, s32& cycles) {
+    Byte result = (value << 1) | C;
+    C = (value & 0x80) != 0;
+    cycles--;
+    Z = (result == 0);
+    N = (result & 0x80) != 0;
+    return result;
+}
+
+Byte CPU::ROTATE_RIGHT(Byte value, s32& cycles) {
+    Byte result = (value >> 1) | (C << 7);
+    C = (value & 0x01) != 0;
+    cycles--;
+    Z = (result == 0);
+    N = (result & 0x80) != 0;
+    return result;
+}
+
 
 s32 CPU::Execute(Memory& memory, s32 cycles) {
 
@@ -1497,6 +1515,104 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
                 WriteByte(memory, cycles, addr, value);
                 break;
             }
+
+
+
+            case INS_ROL_A: {
+                A = ROTATE_LEFT(A, cycles);
+                break;
+            }
+
+            case INS_ROL_ZP: {
+                Byte addr = FetchByte(memory, cycles);
+                Byte value = ReadByte(memory, cycles, addr);
+                value = ROTATE_LEFT(value, cycles);
+                WriteByte(memory, cycles, addr, value);
+                break;
+            }
+
+            case INS_ROL_ZP_X: {
+                Byte addr = FetchByte(memory, cycles);
+                addr += X;
+                cycles--;
+                Byte value = ReadByte(memory, cycles, addr);
+                value = ROTATE_LEFT(value, cycles);
+                WriteByte(memory, cycles, addr, value);
+                break;
+            }
+
+            case INS_ROL_ABS: {
+                Byte low = FetchByte(memory, cycles);
+                Byte high = FetchByte(memory, cycles);
+                Word addr = (high << 8) | low;
+                Byte value = ReadByte(memory, cycles, addr);
+                value = ROTATE_LEFT(value, cycles);
+                WriteByte(memory, cycles, addr, value);
+                break;
+            }
+
+            case INS_ROL_ABS_X: {
+                Byte low = FetchByte(memory, cycles);
+                Byte high = FetchByte(memory, cycles);
+                Word addr = (high << 8) | low;
+                addr += X;
+                cycles--;
+                Byte value = ReadByte(memory, cycles, addr);
+                value = ROTATE_LEFT(value, cycles);
+                WriteByte(memory, cycles, addr, value);
+                break;
+            }
+
+
+
+            case INS_ROR_A: {
+                A = ROTATE_RIGHT(A, cycles);
+                break;
+            }
+
+            case INS_ROR_ZP: {
+                Byte addr = FetchByte(memory, cycles);
+                Byte value = ReadByte(memory, cycles, addr);
+                value = ROTATE_RIGHT(value, cycles);
+                WriteByte(memory, cycles, addr, value);
+                break;
+            }
+
+            case INS_ROR_ZP_X: {
+                Byte addr = FetchByte(memory, cycles);
+                addr += X;
+                cycles--;
+                Byte value = ReadByte(memory, cycles, addr);
+                value = ROTATE_RIGHT(value, cycles);
+                WriteByte(memory, cycles, addr, value);
+                break;
+            }
+
+            case INS_ROR_ABS: {
+                Byte low = FetchByte(memory, cycles);
+                Byte high = FetchByte(memory, cycles);
+                Word addr = (high << 8) | low;
+                Byte value = ReadByte(memory, cycles, addr);
+                value = ROTATE_RIGHT(value, cycles);
+                WriteByte(memory, cycles, addr, value);
+                break;
+            }
+
+            case INS_ROR_ABS_X: {
+                Byte low = FetchByte(memory, cycles);
+                Byte high = FetchByte(memory, cycles);
+                Word addr = (high << 8) | low;
+                addr += X;
+                cycles--;
+                Byte value = ReadByte(memory, cycles, addr);
+                value = ROTATE_RIGHT(value, cycles);
+                WriteByte(memory, cycles, addr, value);
+                break;
+            }
+
+
+
+            
 
 
 
