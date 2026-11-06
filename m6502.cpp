@@ -330,11 +330,11 @@ Byte CPU::ROTATE_RIGHT(Byte value, s32& cycles) {
 }
 
 
-s32 CPU::Execute(Memory& memory, s32 cycles) {
+s32 CPU::Step(Memory& memory) {
 
-    const s32 initial = cycles;
+    s32 cycles = 0;
 
-    while (cycles > 0) {
+
 
         Byte opcode = FetchByte(memory,cycles);
         
@@ -1656,7 +1656,14 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
                 printf("Unknown opcode: 0x%02X at PC: 0x%04X\n", opcode, PC-1);
                 break;
         }
-        
+    return -cycles;
+}
+
+s32 CPU::Execute(Memory& memory, s32 cycles) {
+    const s32 initial = cycles;
+    while (cycles > 0) {
+        s32 consumed = Step(memory);
+        cycles -= consumed;
     }
     PrintState();
     const s32 cyclesUsed = initial - cycles;

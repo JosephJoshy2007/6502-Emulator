@@ -4,6 +4,10 @@ project(6502Emulator CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+if(POLICY CMP0169)
+  cmake_policy(SET CMP0169 OLD)
+endif()
+
 # 1. Build the emulator as a static library
 add_library(6502_lib m6502.cpp)
 target_include_directories(6502_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
@@ -68,3 +72,62 @@ target_link_libraries(6502_rotate_tests PRIVATE 6502_lib GTest::gtest_main)
 
 add_executable(6502_interrupt_tests testing/test_interrupt.cpp)
 target_link_libraries(6502_interrupt_tests PRIVATE 6502_lib GTest::gtest_main)
+
+# 4. GUI Debugger (GLFW + OpenGL + Dear ImGui)
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+set(GLFW_INSTALL OFF CACHE BOOL "" FORCE)
+
+FetchContent_Declare(
+  glfw
+  GIT_REPOSITORY https://github.com/glfw/glfw.git
+  GIT_TAG 3.4
+)
+FetchContent_MakeAvailable(glfw)
+
+FetchContent_Declare(
+  imgui
+  GIT_REPOSITORY https://github.com/ocornut/imgui.git
+  GIT_TAG v1.91.5
+)
+FetchContent_GetProperties(imgui)
+if(NOT imgui_POPULATED)
+  FetchContent_Populate(imgui)
+  add_library(imgui STATIC
+    ${imgui_SOURCE_DIR}/imgui.cpp
+    ${imgui_SOURCE_DIR}/imgui_demo.cpp
+    ${imgui_SOURCE_DIR}/imgui_draw.cpp
+    ${imgui_SOURCE_DIR}/imgui_tables.cpp
+    ${imgui_SOURCE_DIR}/imgui_widgets.cpp
+    ${imgui_SOURCE_DIR}/backends/imgui_impl_glfw.cpp
+    ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.cpp
+  )
+  target_include_directories(imgui PUBLIC
+    ${imgui_SOURCE_DIR}
+    ${imgui_SOURCE_DIR}/backends
+  )
+  target_link_libraries(imgui PUBLIC glfw)
+  if(WIN32)
+    target_link_libraries(imgui PUBLIC opengl32)
+  endif()
+endif()
+
+add_executable(6502_debugger
+  debugger/Disassembler.cpp
+  debugger/Debugger.cpp
+  debugger/DebuggerUI.cpp
+  debugger/main_gui.cpp
+)
+target_include_directories(6502_debugger PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}/debugger
+)
+target_link_libraries(6502_debugger PRIVATE
+  6502_lib
+  imgui
+  glfw
+)
+if(WIN32)
+  target_link_libraries(6502_debugger PRIVATE opengl32)
+endif()

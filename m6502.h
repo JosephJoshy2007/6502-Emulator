@@ -297,6 +297,8 @@ struct CPU{
         INS_BRK = 0x00,
         INS_RTI = 0x40;
 
+    s32 Step(Memory& memory);
+
     s32 Execute(Memory& memory, s32 cycles);
     
 };
