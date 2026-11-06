@@ -1612,7 +1612,42 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
 
 
 
-            
+            case INS_BRK: {
+
+                Word returnAddress = PC + 1; // Address of the next instruction after BRK
+                cycles--;
+                WriteByte(memory,cycles, SP | 0x0100, (returnAddress >> 8) & 0xFF); // Push high byte
+                SP--;
+                WriteByte(memory,cycles, SP | 0x0100, returnAddress & 0xFF); // Push low byte
+                SP--;
+
+                Byte status = GetStatusRegister() | 0x30; // Set Break flag
+                WriteByte(memory,cycles, SP | 0x0100, status); // Push
+                SP--;
+
+                Byte interruptLow = ReadByte(memory, cycles, 0xFFFE);
+                I = 1;
+                Byte interruptHigh = ReadByte(memory, cycles, 0xFFFF);
+                PC = (static_cast<Word>(interruptHigh) << 8) | interruptLow;
+                break;
+
+            }
+
+            case INS_RTI: {
+
+                ReadByte(memory, cycles, PC);
+                SP++;
+                cycles--;
+                Byte status = ReadByte(memory, cycles, SP | 0x0100);
+                SetStatusRegister(status);
+
+                SP++;
+                Byte low = ReadByte(memory, cycles, SP | 0x0100);
+                SP++;
+                Byte high = ReadByte(memory, cycles, SP | 0x0100);
+                PC = (static_cast<Word>(high) << 8) | low;
+                break;
+            }
 
 
 

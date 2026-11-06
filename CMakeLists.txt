@@ -65,3 +65,6 @@ target_link_libraries(6502_shift_right_tests PRIVATE 6502_lib GTest::gtest_main)
 
 add_executable(6502_rotate_tests testing/test_rotate.cpp)
 target_link_libraries(6502_rotate_tests PRIVATE 6502_lib GTest::gtest_main)
+
+add_executable(6502_interrupt_tests testing/test_interrupt.cpp)
+target_link_libraries(6502_interrupt_tests PRIVATE 6502_lib GTest::gtest_main)
