@@ -89,6 +89,10 @@ struct CPU{
 
     void COMPARE_ABSOLUTE(Memory& memory, s32& cycles, Byte& Register);
 
+    Byte ARITHMETIC_SHIFT_LEFT(Byte value, s32& cycles);
+
+    Byte LOGICAL_SHIFT_RIGHT(Byte value, s32& cycles);
+
     static constexpr Byte 
 
         //LDA

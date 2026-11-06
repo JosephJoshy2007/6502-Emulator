@@ -291,6 +291,27 @@ void CPU::COMPARE_ABSOLUTE(Memory& memory, s32& cycles, Byte& Register) {
     COMPARE(value, Register);   
 }
 
+Byte CPU::ARITHMETIC_SHIFT_LEFT(Byte value, s32& cycles) {
+
+    C = (value & 0x80) != 0;
+    Byte result = value << 1;
+    cycles--;
+    Z = (result == 0);
+    N = (result & 0x80) != 0;
+    return result;
+}
+
+Byte CPU::LOGICAL_SHIFT_RIGHT(Byte value, s32& cycles) {
+
+    C = (value & 0x01) != 0;
+    Byte result = static_cast<Byte>(value >> 1);
+    cycles--;
+    Z = (result == 0);
+    N = false;
+    return result;
+}
+
+
 s32 CPU::Execute(Memory& memory, s32 cycles) {
 
     const s32 initial = cycles;
@@ -1380,6 +1401,100 @@ s32 CPU::Execute(Memory& memory, s32 cycles) {
 
             case INS_CPY_ABS: {
                 COMPARE_ABSOLUTE(memory, cycles, Y);
+                break;
+            }
+
+
+
+            case INS_ASL_A: {
+                A = ARITHMETIC_SHIFT_LEFT(A, cycles);
+                break;
+            }
+
+            case INS_ASL_ZP: {
+                Byte addr = FetchByte(memory, cycles);
+                Byte value = ReadByte(memory, cycles, addr);
+                value = ARITHMETIC_SHIFT_LEFT(value, cycles);
+                WriteByte(memory, cycles, addr, value);
+                break;
+            }
+
+            case INS_ASL_ZP_X: {
+                Byte addr = FetchByte(memory, cycles);
+                addr += X;
+                cycles--;
+                Byte value = ReadByte(memory, cycles, addr);
+                value = ARITHMETIC_SHIFT_LEFT(value, cycles);
+                WriteByte(memory, cycles, addr, value);
+                break;
+            }
+
+            case INS_ASL_ABS: {
+                Byte low = FetchByte(memory, cycles);
+                Byte high = FetchByte(memory, cycles);
+                Word addr = (high << 8) | low;
+                Byte value = ReadByte(memory, cycles, addr);
+                value = ARITHMETIC_SHIFT_LEFT(value, cycles);
+                WriteByte(memory, cycles, addr, value);
+                break;
+            }
+
+            case INS_ASL_ABS_X: {
+                Byte low = FetchByte(memory, cycles);
+                Byte high = FetchByte(memory, cycles);
+                Word addr = (high << 8) | low;
+                addr += X;
+                cycles--;
+                Byte value = ReadByte(memory, cycles, addr);
+                value = ARITHMETIC_SHIFT_LEFT(value, cycles);
+                WriteByte(memory, cycles, addr, value);
+                break;
+            }
+
+
+
+            case INS_LSR_A: {
+                A = LOGICAL_SHIFT_RIGHT(A, cycles);
+                break;
+            }
+
+            case INS_LSR_ZP: {
+                Byte addr = FetchByte(memory, cycles);
+                Byte value = ReadByte(memory, cycles, addr);
+                value = LOGICAL_SHIFT_RIGHT(value, cycles);
+                WriteByte(memory, cycles, addr, value);
+                break;
+            }
+
+            case INS_LSR_ZP_X: {
+                Byte addr = FetchByte(memory, cycles);
+                addr += X;
+                cycles--;
+                Byte value = ReadByte(memory, cycles, addr);
+                value = LOGICAL_SHIFT_RIGHT(value, cycles);
+                WriteByte(memory, cycles, addr, value);
+                break;
+            }
+
+            case INS_LSR_ABS: {
+                Byte low = FetchByte(memory, cycles);
+                Byte high = FetchByte(memory, cycles);
+                Word addr = (high << 8) | low;
+                Byte value = ReadByte(memory, cycles, addr);
+                value = LOGICAL_SHIFT_RIGHT(value, cycles);
+                WriteByte(memory, cycles, addr, value);
+                break;
+            }
+
+            case INS_LSR_ABS_X: {
+                Byte low = FetchByte(memory, cycles);
+                Byte high = FetchByte(memory, cycles);
+                Word addr = (high << 8) | low;
+                addr += X;
+                cycles--;
+                Byte value = ReadByte(memory, cycles, addr);
+                value = LOGICAL_SHIFT_RIGHT(value, cycles);
+                WriteByte(memory, cycles, addr, value);
                 break;
             }
 
